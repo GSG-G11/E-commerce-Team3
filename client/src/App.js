@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import swal from 'sweetalert';
-import './App.css';
 import Card from './components/Card/Card';
 import Login from './components/Login/Login';
 import Products from './components/Modal/Products';
 
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+
+import swal from 'sweetalert';
+import './App.css';
 export default class App extends Component {
   state = {
     login: '',
@@ -105,13 +107,23 @@ export default class App extends Component {
   render() {
     const { login, displayLogin, displayProducts, products } = this.state;
     return (
-      <>
-        {!login && <button onClick={this.handleLoginButton}>Login</button>}
-        {displayLogin && <Login handleLogin={this.handleLogin} />}
-        {login && <button onClick={this.displayProduct}>Add</button>}
-        {displayProducts && <Products addProduct={this.addProduct} />}
-        <Card products={products} deleteProduct={this.deleteProduct} />
-      </>
+      <BrowserRouter>
+        <div>
+          <>
+            {!login && <button onClick={this.handleLoginButton}>Login</button>}
+            {displayLogin && <Login handleLogin={this.handleLogin} />}
+            {login && <button onClick={this.displayProduct}>Add</button>}
+            {displayProducts && <Products addProduct={this.addProduct} />}
+          </>
+          <Switch>
+            <Route
+              path="/"
+              render={(props) => <Card products={products} {...props} />}
+              exact
+            />
+          </Switch>
+        </div>
+      </BrowserRouter>
     );
   }
 }

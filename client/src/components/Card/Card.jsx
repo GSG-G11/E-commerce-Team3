@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 export default function Card({ products, deleteProduct }) {
   return products.map(({ id, img_url, name, price, category }) => {
