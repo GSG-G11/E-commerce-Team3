@@ -45,7 +45,7 @@ export default class App extends Component {
       img: img.value,
       category: categories.value,
     };
-    
+
     fetch('/api/v1/product', {
       method: 'POST',
       headers: {
@@ -53,37 +53,64 @@ export default class App extends Component {
       },
       body: JSON.stringify(product),
     })
-    .then(res=> res.json())
-    .then(data=> this.setState({
-      products: [data.rows[0], ...this.state.products],
-    }));
+      .then((res) => res.json())
+      .then((data) =>
+        this.setState({
+          products: [data.rows[0], ...this.state.products],
+        })
+      );
   };
 
-  
   componentDidMount() {
-   
     fetch('/api/v1/products', {
-        method: 'GET',
-        headers: {
-          'content-type': 'application/json',
-        },
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json',
+      },
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          return response.json();
+        }
       })
-      .then((response) => { if (response.status === 200) {return response.json()}})
-      .then((data) => {this.setState({
-        products: data,
-      });})
-      .catch((err) => { console.log(err)})
+      .then((data) => {
+        this.setState({
+          products: data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
+  deleteProduct = (id) => {
+    fetch(`/api/v1/product/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'content-type': 'application/json',
+      },
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          this.setState({
+            products: this.state.products.filter(
+              (product) => product.id !== id
+            ),
+          });
+        }
+      })
+      .catch(console.log);
+  };
+
   render() {
-    const { login, displayLogin, displayProducts, products} = this.state;
+    const { login, displayLogin, displayProducts, products } = this.state;
     return (
       <>
         {!login && <button onClick={this.handleLoginButton}>Login</button>}
         {displayLogin && <Login handleLogin={this.handleLogin} />}
         {login && <button onClick={this.displayProduct}>Add</button>}
         {displayProducts && <Products addProduct={this.addProduct} />}
-        <Card products={products}/>
+        <Card products={products} deleteProduct={this.deleteProduct} />
       </>
     );
   }
