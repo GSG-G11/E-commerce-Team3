@@ -85,6 +85,25 @@ export default class App extends Component {
       });
   }
 
+  deleteProduct = (id) => {
+    fetch(`/api/v1/product/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'content-type': 'application/json',
+      },
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          this.setState({
+            products: this.state.products.filter(
+              (product) => product.id !== id
+            ),
+          });
+        }
+      })
+      .catch(console.log);
+  };
+
   render() {
     const { login, displayLogin, displayProducts, products } = this.state;
     return (
