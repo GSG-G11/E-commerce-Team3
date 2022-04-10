@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import Card from './components/Card/Card';
 import Login from './components/Login/Login';
 import Products from './components/Modal/Products';
+// <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>;
 
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import swal from 'sweetalert';
+import Swal from 'sweetalert2';
+
 import './App.css';
 export default class App extends Component {
   state = {
@@ -86,22 +89,52 @@ export default class App extends Component {
   }
 
   deleteProduct = (id) => {
-    fetch(`/api/v1/product/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'content-type': 'application/json',
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn-alert btn-success',
+        cancelButton: 'btn-alert btn-danger',
       },
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          this.setState({
-            products: this.state.products.filter(
-              (product) => product.id !== id
-            ),
+      buttonsStyling: false,
+    });
+
+    swalWithBootstrapButtons
+      .fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'question',
+        showCancelButton: true,
+        cancelButtonText: 'No, cancel!',
+        confirmButtonText: 'Yes, delete it!',
+        reverseButtons: false,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          fetch(`/api/v1/product/${id}`, {
+            method: 'DELETE',
+            headers: {
+              'content-type': 'application/json',
+            },
+          })
+            .then((res) => {
+              if (res.status === 200) {
+                this.setState({
+                  products: this.state.products.filter(
+                    (product) => product.id !== id
+                  ),
+                });
+              }
+            })
+            .catch(console.log);
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: "Don't worry, Your product is safe!",
+            showConfirmButton: false,
+            timer: 1500,
           });
         }
-      })
-      .catch(console.log);
+      });
   };
 
   render() {
@@ -118,7 +151,13 @@ export default class App extends Component {
           <Switch>
             <Route
               path="/"
-              render={(props) => <Card products={products} {...props} />}
+              render={(props) => (
+                <Card
+                  products={products}
+                  {...props}
+                  deleteProduct={this.deleteProduct}
+                />
+              )}
               exact
             />
           </Switch>
