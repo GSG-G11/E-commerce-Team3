@@ -2,17 +2,24 @@ import React from 'react';
 
 export default function Card({
   meals,
+  filteredMeals,
   deleteMeal,
   openModal,
   login,
   addToCart,
   page,
   deleteFromCart,
+  isFiltered,
 }) {
   let check = false;
   if (page === 'main') {
     check = true;
   }
+
+  if (isFiltered) {
+    meals = filteredMeals
+  }
+
   return meals.map(({ id, img_url, name, price, category }) => {
     return (
       <div key={id.toString()} className="card">

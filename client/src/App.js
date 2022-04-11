@@ -16,6 +16,8 @@ export default class App extends Component {
     isOpen: false,
     currentMeal: {},
     cart: JSON.parse(localStorage.getItem('cart')) || [],
+    filteredMeals:[],
+    isFiltered: false,
   };
 
   // ! Add to Local Storage Function
@@ -285,6 +287,16 @@ export default class App extends Component {
       });
   }
 
+  searchByName = (word) => {
+    if (!word){
+      this.setState({isFiltered:false});
+    }
+    const {meals} = this.state;
+    const filtered = meals.filter(meal => meal.name.toLowerCase().includes(word.toLowerCase()))
+    // console.log(filtered);
+    this.setState({filteredMeals: filtered, isFiltered : true });
+  }
+
   render() {
     const {
       displayLogin,
@@ -294,6 +306,8 @@ export default class App extends Component {
       currentMeal,
       cart,
       isLoggedIn,
+      filteredMeals,
+      isFiltered,
     } = this.state;
     return (
       <BrowserRouter>
@@ -307,6 +321,8 @@ export default class App extends Component {
                   isLoggedIn={isLoggedIn}
                   handleLogout={this.handleLogout}
                   meals={meals}
+                  filteredMeals={filteredMeals}
+                  isFiltered={isFiltered}
                   deleteMeal={this.deleteMeal}
                   openModal={this.openModal}
                   addToCart={this.addToCart}
@@ -317,6 +333,7 @@ export default class App extends Component {
                   isEdit={isEdit}
                   currentMeal={currentMeal}
                   editMeal={this.editMeal}
+                  searchByName={this.searchByName}
                   page="main"
                 />
               )}

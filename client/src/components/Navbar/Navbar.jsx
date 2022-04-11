@@ -9,12 +9,13 @@ export default function Navbar({
   isLoggedIn,
   handleLogout,
   openModal,
+  searchByName,
 }) {
   return (
     <div className="navbar">
       <Logo />
       <div className="rightSide">
-        <Search />
+        <Search searchByName={searchByName} />
         {isLoggedIn && <Button word="Add" onClickFunction={openModal} />}
         {isLoggedIn && <Button word="Logout" onClickFunction={handleLogout} />}
         {!isLoggedIn && <CartIcon />}
