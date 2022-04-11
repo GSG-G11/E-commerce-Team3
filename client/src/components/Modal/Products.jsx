@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Products({ addProduct, editProductButton, isEdit, currentTask ,editProduct}) {
+export default function Products({ addProduct, isEdit, currentTask ,editProduct}) {
   let sumbitFun = addProduct;
   let type = 'Add';
   let nameValue = '';
