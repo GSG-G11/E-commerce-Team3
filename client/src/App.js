@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Card from './components/Card/Card';
 import Login from './components/Login/Login';
 import Products from './components/Modal/Products';
-// <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>;
 
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
@@ -18,6 +17,7 @@ export default class App extends Component {
     products: [],
     isEdit: false,
     currentTask: {},
+    cart: JSON.parse(localStorage.getItem('cart')) || [],
   };
 
   addToLocalStorage = (key, value) => {
@@ -77,28 +77,6 @@ export default class App extends Component {
       );
   };
 
-  componentDidMount() {
-    fetch('/api/v1/products', {
-      method: 'GET',
-      headers: {
-        'content-type': 'application/json',
-      },
-    })
-      .then((response) => {
-        if (response.status === 200) {
-          return response.json();
-        }
-      })
-      .then((data) => {
-        this.setState({
-          products: data,
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
   deleteProduct = (id) => {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -147,17 +125,19 @@ export default class App extends Component {
         }
       });
   };
+
   editProductButton = (id) => {
     this.setState({ isEdit: true });
   };
+
   editProduct = (e) => {
     e.preventDefault();
-    const { products , currentTask } = this.state;
+    const { products, currentTask } = this.state;
     const { name, price, description, img, categories } = e.target;
     const id = currentTask.id;
 
     const upadateProduct = {
-      id:id,
+      id: id,
       name: name.value,
       price: price.value,
       description: description.value,
@@ -165,14 +145,6 @@ export default class App extends Component {
       category: categories.value,
     };
 
-    // const allProducts = products.map((product) => {
-   
-    //   if (product.id === id) {
-    //     return upadateProduct;
-    //   } else {
-    //     return product;
-    //   }
-    // });
     fetch(`/api/v1/product/${id}`, {
       method: 'PUT',
       headers: {
@@ -181,18 +153,60 @@ export default class App extends Component {
       body: JSON.stringify(upadateProduct),
     })
       .then((res) => res.json())
-      .then((data) =>
-       const  allProducts = products.map((product) => {
-   
-        if (product.id === data.rows[0].id) {
-          return upadateProduct;
-        } else {
-          return product;
-        }
+      .then((data) => {
+        const allProducts = products.map((product) => {
+          if (product.id === data.rows[0].id) {
+            return upadateProduct;
+          } else {
+            return product;
+          }
+        });
+        this.setState({ products: allProducts });
       });
-         this.setState({ products: allProducts })
-      );
   };
+
+  addToCart = (e, id) => {
+    e.preventDefault();
+    const { cart } = this.state;
+    const currentTask = this.state.products.filter(
+      (product) => product.id === id
+    );
+    cart.push(currentTask[0]);
+    this.setState({
+      cart: cart,
+    });
+    this.addToLocalStorage('cart', cart);
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Your product added successfully',
+      showConfirmButton: false,
+      timer: 2000,
+    });
+  };
+
+  componentDidMount() {
+    fetch('/api/v1/products', {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json',
+      },
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        this.setState({
+          products: data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   render() {
     const {
       login,
@@ -231,6 +245,7 @@ export default class App extends Component {
                   deleteProduct={this.deleteProduct}
                   displayProduct={this.displayProduct}
                   login={login}
+                  addToCart={this.addToCart}
                 />
               )}
               exact
