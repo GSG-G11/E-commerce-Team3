@@ -3,6 +3,7 @@ import Login from '../Login/Login';
 import Card from '../Meals/Card';
 import Products from '../Modal/MealsForm';
 import Navbar from '../Navbar/Navbar';
+import Filter from '../Filter/filter';
 import './home.css';
 
 export default function Home({
@@ -22,11 +23,15 @@ export default function Home({
   isEdit,
   searchByName,
   isFiltered,
+  handleChange,
+  selectedCategory
 }) {
+  
+  
   return (
     <>
-      <div className="background"></div>
-      <div className="main">
+      <div className='background'></div>
+      <div className='main'>
         {displayLogin && <Login handleLogin={handleLogin} />}
         {isOpen && (
           <Products
@@ -42,6 +47,7 @@ export default function Home({
           openModal={openModal}
           searchByName={searchByName}
         />
+        <Filter handleChange={handleChange}/>
         <Card
           meals={meals}
           filteredMeals={filteredMeals}
@@ -50,7 +56,8 @@ export default function Home({
           openModal={openModal}
           login={isLoggedIn}
           addToCart={addToCart}
-          page="main"
+          selectedCategory={selectedCategory}
+          page='main'
         />
       </div>
     </>

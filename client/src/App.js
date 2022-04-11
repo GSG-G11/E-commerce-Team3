@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-
-import Card from './components/Meals/Card';
 import Cart from './components/Cart/Cart';
 
 import Swal from 'sweetalert2';
@@ -18,6 +16,9 @@ export default class App extends Component {
     cart: JSON.parse(localStorage.getItem('cart')) || [],
     filteredMeals:[],
     isFiltered: false,
+   price:0,
+   selectedCategory:'all',
+
   };
 
   // ! Add to Local Storage Function
@@ -293,9 +294,13 @@ export default class App extends Component {
     }
     const {meals} = this.state;
     const filtered = meals.filter(meal => meal.name.toLowerCase().includes(word.toLowerCase()))
-    // console.log(filtered);
     this.setState({filteredMeals: filtered, isFiltered : true });
   }
+
+  handleChange = (event) => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
+  };
 
   render() {
     const {
@@ -308,6 +313,7 @@ export default class App extends Component {
       isLoggedIn,
       filteredMeals,
       isFiltered,
+      selectedCategory
     } = this.state;
     return (
       <BrowserRouter>
@@ -334,27 +340,14 @@ export default class App extends Component {
                   currentMeal={currentMeal}
                   editMeal={this.editMeal}
                   searchByName={this.searchByName}
+                  filterMeals={this.filterMeals}
+                  handleChange={this.handleChange}
+                  selectedCategory={selectedCategory}
                   page="main"
                 />
               )}
               exact
             />
-
-            <Route
-              path="/"
-              render={(props) => (
-                <Card
-                  meals={meals}
-                  {...props}
-                  deleteMeal={this.deleteMeal}
-                  openModal={this.openModal}
-                  addToCart={this.addToCart}
-                  page="main"
-                />
-              )}
-              exact
-            />
-
             <Route
               path="/cart"
               render={(props) => (
