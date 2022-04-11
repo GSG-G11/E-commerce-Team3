@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
+import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
+
 import Card from './components/Meals/Card';
 import Cart from './components/Cart/Cart';
 import Login from './components/Login/Login';
 import Products from './components/Modal/MealsForm';
-import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 
 import Swal from 'sweetalert2';
-
 import './App.css';
+import Home from './components/Home/Home';
 export default class App extends Component {
   state = {
-    login: '',
+    isLoggedIn: localStorage.isLoggedIn ? true : false,
     displayLogin: false,
     displayProducts: false,
     products: [],
@@ -19,10 +20,12 @@ export default class App extends Component {
     cart: JSON.parse(localStorage.getItem('cart')) || [],
   };
 
+  // ! Add to Local Storage Function
   addToLocalStorage = (key, value) => {
     localStorage.setItem(key, JSON.stringify(value));
   };
 
+  // ! Login Functions
   handleLogin = (e) => {
     e.preventDefault();
     const { username, password } = e.target;
@@ -32,17 +35,25 @@ export default class App extends Component {
         title: 'Oops...',
         text: 'Username and Password are required',
       });
+    } else {
+      this.addToLocalStorage('isLoggedIn', true);
+      this.setState({ isLoggedIn: true });
     }
-    this.addToLocalStorage('username', username.value);
-    this.setState({ login: username.value });
   };
 
   handleLoginButton = (e) => {
     this.setState({ displayLogin: !this.state.displayLogin });
   };
 
-  displayProduct = (value, id) => {
-    this.setState({ displayProducts: !this.state.displayProducts });
+  // ! Logout Function
+  handleLogout = (e) => {
+    this.addToLocalStorage('isLoggedIn', false);
+    this.setState({ isLoggedIn: false });
+  };
+
+  // ! Modal Functions
+  openModal = (value, id) => {
+    this.setState({ displayProducts: true });
     if (value === 'update') {
       this.setState({ isEdit: true });
       const currentTask = this.state.products.filter(
@@ -54,6 +65,7 @@ export default class App extends Component {
     }
   };
 
+  // ! Product Function - Add
   addProduct = (e) => {
     e.preventDefault();
     const { name, price, description, img, categories } = e.target;
@@ -80,6 +92,7 @@ export default class App extends Component {
       );
   };
 
+  // ! Product Function - Delete
   deleteProduct = (id) => {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -129,10 +142,7 @@ export default class App extends Component {
       });
   };
 
-  editProductButton = (id) => {
-    this.setState({ isEdit: true });
-  };
-
+  // ! Product Function - Update
   editProduct = (e) => {
     e.preventDefault();
     const { products, currentTask } = this.state;
@@ -168,6 +178,7 @@ export default class App extends Component {
       });
   };
 
+  // ! Product Function - Add to Cart
   addToCart = (e, id) => {
     e.preventDefault();
     const { cart } = this.state;
@@ -204,6 +215,7 @@ export default class App extends Component {
     }
   };
 
+  // ! Product Function - Remove from Cart
   deleteFromCart = (id) => {
     const { cart } = this.state;
     const swalWithBootstrapButtons = Swal.mixin({
@@ -274,57 +286,73 @@ export default class App extends Component {
 
   render() {
     const {
-      login,
       displayLogin,
       displayProducts,
       products,
       isEdit,
       currentTask,
       cart,
+      isLoggedIn,
     } = this.state;
     return (
       <BrowserRouter>
         <div>
           <>
-            {!login && <Link to='/cart'>cart</Link>}
-            {!login && <button onClick={this.handleLoginButton}>Login</button>}
-            {displayLogin && <Login handleLogin={this.handleLogin} />}
-            {login && (
-              <button onClick={() => this.displayProduct('add')}>Add</button>
-            )}
             {displayProducts && (
               <Products
                 addProduct={this.addProduct}
-                editProductButton={this.editProductButton}
                 isEdit={isEdit}
                 currentTask={currentTask}
                 editProduct={this.editProduct}
               />
             )}
+            {displayLogin && <Login handleLogin={this.handleLogin} />}
           </>
           <Switch>
             <Route
-              path='/'
+              path="/"
+              render={(props) => (
+                <Home
+                  {...props}
+                  isLoggedIn={isLoggedIn}
+                  handleLoginButton={this.handleLoginButton}
+                  handleLogout={this.handleLogout}
+                  products={products}
+                  deleteProduct={this.deleteProduct}
+                  openModal={this.openModal}
+                  addToCart={this.addToCart}
+                  page="main"
+                />
+              )}
+              exact
+            />
+
+            <Route
+              path="/"
               render={(props) => (
                 <Card
                   products={products}
                   {...props}
                   deleteProduct={this.deleteProduct}
-                  displayProduct={this.displayProduct}
-                  login={login}
+                  openModal={this.openModal}
                   addToCart={this.addToCart}
-                  page='main'
+                  page="main"
                 />
               )}
               exact
             />
+
             <Route
-              path='/cart'
+              path="/cart"
               render={(props) => (
                 <Cart
-                  products={cart}
                   {...props}
+                  products={cart}
                   deleteFromCart={this.deleteFromCart}
+                  isLoggedIn={isLoggedIn}
+                  handleLogout={this.handleLogout}
+                  handleLoginButton={this.handleLoginButton}
+                  openModal={this.openModal}
                 />
               )}
             />

@@ -5,13 +5,18 @@ import CartIcon from './CartIcon';
 import Button from './Button';
 import './navbar.css';
 
-export default function Navbar({ isLoggedIn, handleLogout, handleLoginButton }) {
+export default function Navbar({
+  isLoggedIn,
+  handleLogout,
+  handleLoginButton,
+  openModal,
+}) {
   return (
     <div className="navbar">
       <Logo />
       <div className="rightSide">
         <Search />
-        {isLoggedIn && <Button word="Add" />}
+        {isLoggedIn && <Button word="Add" onClickFunction={openModal} />}
         {isLoggedIn && <Button word="Logout" onClickFunction={handleLogout} />}
         {!isLoggedIn && <CartIcon />}
         {!isLoggedIn && (

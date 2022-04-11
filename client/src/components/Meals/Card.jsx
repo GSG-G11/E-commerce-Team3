@@ -1,8 +1,16 @@
 import React from 'react';
 
-export default function Card({ products, deleteProduct, displayProduct, login,addToCart, page,deleteFromCart}) {
-  let check = false; 
-  if(page==="main"){
+export default function Card({
+  products,
+  deleteProduct,
+  openModal,
+  login,
+  addToCart,
+  page,
+  deleteFromCart,
+}) {
+  let check = false;
+  if (page === 'main') {
     check = true;
   }
   return products.map(({ id, img_url, name, price, category }) => {
@@ -12,10 +20,18 @@ export default function Card({ products, deleteProduct, displayProduct, login,ad
         <h3>{name}</h3>
         <p>{price}</p>
         <p>{category}</p>
-        {check && login && <button onClick={() => deleteProduct(id)}>DELETE</button> }
-        {!check && !login && <button onClick={() => deleteFromCart(id)}>DELETE</button> }
-        {check && login && <button onClick={() => displayProduct('update',id)} >EDIT</button>}
-        {check && !login && <button onClick={(e) => addToCart(e,id)}>Add to cart</button>}
+        {check && login && (
+          <button onClick={() => deleteProduct(id)}>DELETE</button>
+        )}
+        {!check && !login && (
+          <button onClick={() => deleteFromCart(id)}>DELETE</button>
+        )}
+        {check && login && (
+          <button onClick={() => openModal('update', id)}>EDIT</button>
+        )}
+        {check && !login && (
+          <button onClick={(e) => addToCart(e, id)}>Add to cart</button>
+        )}
       </div>
     );
   });
