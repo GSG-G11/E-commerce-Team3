@@ -8,6 +8,7 @@ import './home.css';
 export default function Home({
   isLoggedIn,
   meals,
+  filteredMeals,
   addToCart,
   deleteMeal,
   handleLogout,
@@ -20,6 +21,7 @@ export default function Home({
   isOpen,
   isEdit,
   searchByName,
+  isFiltered,
 }) {
   return (
     <>
@@ -42,6 +44,8 @@ export default function Home({
         />
         <Card
           meals={meals}
+          filteredMeals={filteredMeals}
+          isFiltered={isFiltered}
           deleteMeal={deleteMeal}
           openModal={openModal}
           login={isLoggedIn}
