@@ -8,7 +8,6 @@ export default function Cart({
   deleteFromCart,
   isLoggedIn,
   handleLogout,
-  handleLoginButton,
   openModal,
 }) {
   return (
@@ -16,7 +15,6 @@ export default function Cart({
       <Navbar
         isLoggedIn={isLoggedIn}
         handleLogout={handleLogout}
-        handleLoginButton={handleLoginButton}
         openModal={openModal}
       />
       <Card products={products} page={page} deleteFromCart={deleteFromCart} />

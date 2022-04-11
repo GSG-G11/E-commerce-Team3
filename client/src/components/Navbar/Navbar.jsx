@@ -8,7 +8,6 @@ import './navbar.css';
 export default function Navbar({
   isLoggedIn,
   handleLogout,
-  handleLoginButton,
   openModal,
 }) {
   return (
@@ -20,7 +19,7 @@ export default function Navbar({
         {isLoggedIn && <Button word="Logout" onClickFunction={handleLogout} />}
         {!isLoggedIn && <CartIcon />}
         {!isLoggedIn && (
-          <Button word="Login" onClickFunction={handleLoginButton} />
+          <Button word="Login" onClickFunction={() => openModal('login')} />
         )}
       </div>
     </div>

@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import Card from './components/Meals/Card';
 import Cart from './components/Cart/Cart';
-import Login from './components/Login/Login';
-import Products from './components/Modal/MealsForm';
 
 import Swal from 'sweetalert2';
 import './App.css';
@@ -13,9 +11,9 @@ export default class App extends Component {
   state = {
     isLoggedIn: localStorage.isLoggedIn ? true : false,
     displayLogin: false,
-    displayProducts: false,
     products: [],
     isEdit: false,
+    isOpen: false,
     currentTask: {},
     cart: JSON.parse(localStorage.getItem('cart')) || [],
   };
@@ -38,11 +36,8 @@ export default class App extends Component {
     } else {
       this.addToLocalStorage('isLoggedIn', true);
       this.setState({ isLoggedIn: true });
+      this.closeModal('login');
     }
-  };
-
-  handleLoginButton = (e) => {
-    this.setState({ displayLogin: !this.state.displayLogin });
   };
 
   // ! Logout Function
@@ -53,16 +48,27 @@ export default class App extends Component {
 
   // ! Modal Functions
   openModal = (value, id) => {
-    this.setState({ displayProducts: true });
+    this.setState({ isOpen: true });
     if (value === 'update') {
       this.setState({ isEdit: true });
       const currentTask = this.state.products.filter(
         (product) => product.id === id
       );
       this.setState({ currentTask: currentTask[0] });
+    } else if (value === 'login') {
+      this.setState({ displayLogin: true });
+      this.setState({ isOpen: false });
     } else {
       this.setState({ isEdit: false });
+      this.setState({ displayLogin: false });
     }
+  };
+
+  closeModal = (value) => {
+    if (value === 'update') this.setState({ isEdit: false });
+    else if (value === 'login') this.setState({ displayLogin: false });
+    else this.setState({ isEdit: false });
+    this.setState({ isOpen: false });
   };
 
   // ! Product Function - Add
@@ -90,6 +96,8 @@ export default class App extends Component {
           products: [data.rows[0], ...this.state.products],
         })
       );
+
+    this.closeModal('add');
   };
 
   // ! Product Function - Delete
@@ -176,6 +184,7 @@ export default class App extends Component {
         });
         this.setState({ products: allProducts });
       });
+    this.closeModal('update');
   };
 
   // ! Product Function - Add to Cart
@@ -287,7 +296,7 @@ export default class App extends Component {
   render() {
     const {
       displayLogin,
-      displayProducts,
+      isOpen,
       products,
       isEdit,
       currentTask,
@@ -297,17 +306,6 @@ export default class App extends Component {
     return (
       <BrowserRouter>
         <div>
-          <>
-            {displayProducts && (
-              <Products
-                addProduct={this.addProduct}
-                isEdit={isEdit}
-                currentTask={currentTask}
-                editProduct={this.editProduct}
-              />
-            )}
-            {displayLogin && <Login handleLogin={this.handleLogin} />}
-          </>
           <Switch>
             <Route
               path="/"
@@ -315,12 +313,18 @@ export default class App extends Component {
                 <Home
                   {...props}
                   isLoggedIn={isLoggedIn}
-                  handleLoginButton={this.handleLoginButton}
                   handleLogout={this.handleLogout}
                   products={products}
                   deleteProduct={this.deleteProduct}
                   openModal={this.openModal}
                   addToCart={this.addToCart}
+                  handleLogin={this.handleLogin}
+                  displayLogin={displayLogin}
+                  isOpen={isOpen}
+                  addProduct={this.addProduct}
+                  isEdit={isEdit}
+                  currentTask={currentTask}
+                  editProduct={this.editProduct}
                   page="main"
                 />
               )}
@@ -351,7 +355,6 @@ export default class App extends Component {
                   deleteFromCart={this.deleteFromCart}
                   isLoggedIn={isLoggedIn}
                   handleLogout={this.handleLogout}
-                  handleLoginButton={this.handleLoginButton}
                   openModal={this.openModal}
                 />
               )}
