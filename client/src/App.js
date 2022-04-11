@@ -16,6 +16,8 @@ export default class App extends Component {
     displayLogin: false,
     displayProducts: false,
     products: [],
+    isEdit: false,
+    currentTask: {},
   };
 
   addToLocalStorage = (key, value) => {
@@ -36,8 +38,17 @@ export default class App extends Component {
     this.setState({ displayLogin: !this.state.displayLogin });
   };
 
-  displayProduct = (e) => {
+  displayProduct = (value, id) => {
     this.setState({ displayProducts: !this.state.displayProducts });
+    if (value === 'update') {
+      this.setState({ isEdit: true });
+      const currentTask = this.state.products.filter(
+        (product) => product.id === id
+      );
+      this.setState({ currentTask: currentTask[0] });
+    } else {
+      this.setState({ isEdit: false });
+    }
   };
 
   addProduct = (e) => {
@@ -136,26 +147,90 @@ export default class App extends Component {
         }
       });
   };
+  editProductButton = (id) => {
+    this.setState({ isEdit: true });
+  };
+  editProduct = (e) => {
+    e.preventDefault();
+    const { products , currentTask } = this.state;
+    const { name, price, description, img, categories } = e.target;
+    const id = currentTask.id;
 
+    const upadateProduct = {
+      id:id,
+      name: name.value,
+      price: price.value,
+      description: description.value,
+      img: img.value,
+      category: categories.value,
+    };
+
+    // const allProducts = products.map((product) => {
+   
+    //   if (product.id === id) {
+    //     return upadateProduct;
+    //   } else {
+    //     return product;
+    //   }
+    // });
+    fetch(`/api/v1/product/${id}`, {
+      method: 'PUT',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(upadateProduct),
+    })
+      .then((res) => res.json())
+      .then((data) =>
+       const  allProducts = products.map((product) => {
+   
+        if (product.id === data.rows[0].id) {
+          return upadateProduct;
+        } else {
+          return product;
+        }
+      });
+         this.setState({ products: allProducts })
+      );
+  };
   render() {
-    const { login, displayLogin, displayProducts, products } = this.state;
+    const {
+      login,
+      displayLogin,
+      displayProducts,
+      products,
+      isEdit,
+      currentTask,
+    } = this.state;
     return (
       <BrowserRouter>
         <div>
           <>
             {!login && <button onClick={this.handleLoginButton}>Login</button>}
             {displayLogin && <Login handleLogin={this.handleLogin} />}
-            {login && <button onClick={this.displayProduct}>Add</button>}
-            {displayProducts && <Products addProduct={this.addProduct} />}
+            {login && (
+              <button onClick={() => this.displayProduct('add')}>Add</button>
+            )}
+            {displayProducts && (
+              <Products
+                addProduct={this.addProduct}
+                editProductButton={this.editProductButton}
+                isEdit={isEdit}
+                currentTask={currentTask}
+                editProduct={this.editProduct}
+              />
+            )}
           </>
           <Switch>
             <Route
-              path="/"
+              path='/'
               render={(props) => (
                 <Card
                   products={products}
                   {...props}
                   deleteProduct={this.deleteProduct}
+                  displayProduct={this.displayProduct}
+                  login={login}
                 />
               )}
               exact
