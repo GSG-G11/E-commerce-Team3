@@ -1,18 +1,23 @@
 import React from 'react';
-import Card from '../Card/Card';
+import Card from '../Meals/Card';
+import Navbar from '../Navbar/Navbar';
 
-export default function Cart({products,page="cart",deleteFromCart}) {
-    return (
-      <>
-      <div>products</div>
-      <Card products={products}
-      page={page}
-      deleteFromCart={deleteFromCart}
-            // deleteProduct={deleteProduct}
-            // displayProduct={displayProduct}
-            // login={login}
-            // addToCart={addToCart}
-            />
-      </>
-    );
+export default function Cart({
+  meals,
+  page = 'cart',
+  deleteFromCart,
+  isLoggedIn,
+  handleLogout,
+  openModal,
+}) {
+  return (
+    <>
+      <Navbar
+        isLoggedIn={isLoggedIn}
+        handleLogout={handleLogout}
+        openModal={openModal}
+      />
+      <Card meals={meals} page={page} deleteFromCart={deleteFromCart} />
+    </>
+  );
 }
