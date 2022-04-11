@@ -1,31 +1,31 @@
 import React from 'react';
 
-export default function Products({ addProduct, isEdit, currentTask ,editProduct}) {
-  let sumbitFun = addProduct;
+export default function Products({ addMeal, isEdit, currentMeal, editMeal }) {
   let type = 'Add';
+  let sumbitFun = addMeal;
   let nameValue = '';
   let priceValue = '';
   let descValue = '';
   let imgValue = '';
   let categoryValue = '';
 
-  if(isEdit){
-    nameValue = currentTask.name;
-    priceValue = currentTask.price;
-    descValue = currentTask.description;
-    imgValue = currentTask.img_url;
-    categoryValue = currentTask.category;
+  if (isEdit) {
     type = 'Update';
-    sumbitFun = editProduct;
+    sumbitFun = editMeal;
+    nameValue = currentMeal.name;
+    priceValue = currentMeal.price;
+    descValue = currentMeal.description;
+    imgValue = currentMeal.img_url;
+    categoryValue = currentMeal.category;
   }
   return (
     <>
       <h1>Products</h1>
       <form onSubmit={sumbitFun}>
-        <input type="text" name="name" defaultValue={nameValue}/>
+        <input type="text" name="name" defaultValue={nameValue} />
         <input type="number" name="price" defaultValue={priceValue} />
         <input type="text" name="description" defaultValue={descValue} />
-        <input type="text" name="img"  defaultValue={imgValue}/>
+        <input type="text" name="img" defaultValue={imgValue} />
         <select name="categories" defaultValue={categoryValue}>
           <option value="Women">Women</option>
           <option value="Man">Man</option>

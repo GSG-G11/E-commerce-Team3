@@ -11,10 +11,10 @@ export default class App extends Component {
   state = {
     isLoggedIn: localStorage.isLoggedIn ? true : false,
     displayLogin: false,
-    products: [],
+    meals: [],
     isEdit: false,
     isOpen: false,
-    currentTask: {},
+    currentMeal: {},
     cart: JSON.parse(localStorage.getItem('cart')) || [],
   };
 
@@ -51,10 +51,8 @@ export default class App extends Component {
     this.setState({ isOpen: true });
     if (value === 'update') {
       this.setState({ isEdit: true });
-      const currentTask = this.state.products.filter(
-        (product) => product.id === id
-      );
-      this.setState({ currentTask: currentTask[0] });
+      const currentMeal = this.state.meals.filter((meal) => meal.id === id);
+      this.setState({ currentMeal: currentMeal[0] });
     } else if (value === 'login') {
       this.setState({ displayLogin: true });
       this.setState({ isOpen: false });
@@ -71,11 +69,11 @@ export default class App extends Component {
     this.setState({ isOpen: false });
   };
 
-  // ! Product Function - Add
-  addProduct = (e) => {
+  // ! Meal Function - Add
+  addMeal = (e) => {
     e.preventDefault();
     const { name, price, description, img, categories } = e.target;
-    const product = {
+    const meal = {
       name: name.value,
       price: price.value,
       description: description.value,
@@ -83,25 +81,25 @@ export default class App extends Component {
       category: categories.value,
     };
 
-    fetch('/api/v1/product', {
+    fetch('/api/v1/meal', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
       },
-      body: JSON.stringify(product),
+      body: JSON.stringify(meal),
     })
       .then((res) => res.json())
       .then((data) =>
         this.setState({
-          products: [data.rows[0], ...this.state.products],
+          meals: [data.rows[0], ...this.state.meals],
         })
       );
 
     this.closeModal('add');
   };
 
-  // ! Product Function - Delete
-  deleteProduct = (id) => {
+  // ! Meal Function - Delete
+  deleteMeal = (id) => {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn-alert btn-success',
@@ -122,7 +120,7 @@ export default class App extends Component {
       })
       .then((result) => {
         if (result.isConfirmed) {
-          fetch(`/api/v1/product/${id}`, {
+          fetch(`/api/v1/meal/${id}`, {
             method: 'DELETE',
             headers: {
               'content-type': 'application/json',
@@ -131,9 +129,7 @@ export default class App extends Component {
             .then((res) => {
               if (res.status === 200) {
                 this.setState({
-                  products: this.state.products.filter(
-                    (product) => product.id !== id
-                  ),
+                  meals: this.state.meals.filter((meal) => meal.id !== id),
                 });
               }
             })
@@ -142,7 +138,7 @@ export default class App extends Component {
           Swal.fire({
             position: 'center',
             icon: 'error',
-            title: "Don't worry, Your product is safe!",
+            title: "Don't worry, Your meal is safe!",
             showConfirmButton: false,
             timer: 1500,
           });
@@ -150,14 +146,14 @@ export default class App extends Component {
       });
   };
 
-  // ! Product Function - Update
-  editProduct = (e) => {
+  // ! Meal Function - Update
+  editMeal = (e) => {
     e.preventDefault();
-    const { products, currentTask } = this.state;
+    const { meals, currentMeal } = this.state;
     const { name, price, description, img, categories } = e.target;
-    const id = currentTask.id;
+    const id = currentMeal.id;
 
-    const upadateProduct = {
+    const upadateMeal = {
       id: id,
       name: name.value,
       price: price.value,
@@ -166,42 +162,38 @@ export default class App extends Component {
       category: categories.value,
     };
 
-    fetch(`/api/v1/product/${id}`, {
+    fetch(`/api/v1/meal/${id}`, {
       method: 'PUT',
       headers: {
         'content-type': 'application/json',
       },
-      body: JSON.stringify(upadateProduct),
+      body: JSON.stringify(upadateMeal),
     })
       .then((res) => res.json())
       .then((data) => {
-        const allProducts = products.map((product) => {
-          if (product.id === data.rows[0].id) {
-            return upadateProduct;
+        const allMeals = meals.map((meal) => {
+          if (meal.id === data.rows[0].id) {
+            return upadateMeal;
           } else {
-            return product;
+            return meal;
           }
         });
-        this.setState({ products: allProducts });
+        this.setState({ meals: allMeals });
       });
     this.closeModal('update');
   };
 
-  // ! Product Function - Add to Cart
+  // ! Meal Function - Add to Cart
   addToCart = (e, id) => {
     e.preventDefault();
     const { cart } = this.state;
-    const currentTask = this.state.products.filter(
-      (product) => product.id === id
-    );
-
+    const currentMeal = this.state.meals.filter((meal) => meal.id === id);
     let check = [];
-
     if (cart.length > 0) {
-      check = cart.filter((product) => product.id === id);
+      check = cart.filter((meal) => meal.id === id);
     }
     if (!check.length > 0) {
-      cart.push(currentTask[0]);
+      cart.push(currentMeal[0]);
       this.setState({
         cart: cart,
       });
@@ -209,7 +201,7 @@ export default class App extends Component {
       Swal.fire({
         position: 'center',
         icon: 'success',
-        title: 'Your product added successfully',
+        title: 'Your meal added successfully',
         showConfirmButton: false,
         timer: 2000,
       });
@@ -217,14 +209,14 @@ export default class App extends Component {
       Swal.fire({
         position: 'center',
         icon: 'error',
-        title: 'Your product is already added',
+        title: 'Your meal is already added',
         showConfirmButton: false,
         timer: 2000,
       });
     }
   };
 
-  // ! Product Function - Remove from Cart
+  // ! Meal Function - Remove from Cart
   deleteFromCart = (id) => {
     const { cart } = this.state;
     const swalWithBootstrapButtons = Swal.mixin({
@@ -247,7 +239,7 @@ export default class App extends Component {
       })
       .then((result) => {
         if (result.isConfirmed) {
-          const newCart = cart.filter((product) => product.id !== id);
+          const newCart = cart.filter((meal) => meal.id !== id);
           this.setState({
             cart: newCart,
           });
@@ -255,7 +247,7 @@ export default class App extends Component {
           Swal.fire({
             position: 'center',
             icon: 'success',
-            title: 'Your product deleted successfully',
+            title: 'Your meal deleted successfully',
             showConfirmButton: false,
             timer: 1500,
           });
@@ -263,7 +255,7 @@ export default class App extends Component {
           Swal.fire({
             position: 'center',
             icon: 'error',
-            title: "Don't worry, Your product is safe!",
+            title: "Don't worry, Your meal is safe!",
             showConfirmButton: false,
             timer: 1500,
           });
@@ -272,7 +264,7 @@ export default class App extends Component {
   };
 
   componentDidMount() {
-    fetch('/api/v1/products', {
+    fetch('/api/v1/meals', {
       method: 'GET',
       headers: {
         'content-type': 'application/json',
@@ -285,7 +277,7 @@ export default class App extends Component {
       })
       .then((data) => {
         this.setState({
-          products: data,
+          meals: data,
         });
       })
       .catch((err) => {
@@ -297,9 +289,9 @@ export default class App extends Component {
     const {
       displayLogin,
       isOpen,
-      products,
+      meals,
       isEdit,
-      currentTask,
+      currentMeal,
       cart,
       isLoggedIn,
     } = this.state;
@@ -314,17 +306,17 @@ export default class App extends Component {
                   {...props}
                   isLoggedIn={isLoggedIn}
                   handleLogout={this.handleLogout}
-                  products={products}
-                  deleteProduct={this.deleteProduct}
+                  meals={meals}
+                  deleteMeal={this.deleteMeal}
                   openModal={this.openModal}
                   addToCart={this.addToCart}
                   handleLogin={this.handleLogin}
                   displayLogin={displayLogin}
                   isOpen={isOpen}
-                  addProduct={this.addProduct}
+                  addMeal={this.addMeal}
                   isEdit={isEdit}
-                  currentTask={currentTask}
-                  editProduct={this.editProduct}
+                  currentMeal={currentMeal}
+                  editMeal={this.editMeal}
                   page="main"
                 />
               )}
@@ -335,9 +327,9 @@ export default class App extends Component {
               path="/"
               render={(props) => (
                 <Card
-                  products={products}
+                  meals={meals}
                   {...props}
-                  deleteProduct={this.deleteProduct}
+                  deleteMeal={this.deleteMeal}
                   openModal={this.openModal}
                   addToCart={this.addToCart}
                   page="main"
@@ -351,7 +343,7 @@ export default class App extends Component {
               render={(props) => (
                 <Cart
                   {...props}
-                  products={cart}
+                  meals={cart}
                   deleteFromCart={this.deleteFromCart}
                   isLoggedIn={isLoggedIn}
                   handleLogout={this.handleLogout}

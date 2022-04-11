@@ -7,16 +7,16 @@ import './home.css';
 
 export default function Home({
   isLoggedIn,
-  products,
+  meals,
   addToCart,
-  deleteProduct,
+  deleteMeal,
   handleLogout,
   handleLogin,
   displayLogin,
-  currentTask,
+  currentMeal,
   openModal,
-  addProduct,
-  editProduct,
+  addMeal,
+  editMeal,
   isOpen,
   isEdit,
 }) {
@@ -27,10 +27,10 @@ export default function Home({
         {displayLogin && <Login handleLogin={handleLogin} />}
         {isOpen && (
           <Products
-            addProduct={addProduct}
+            addMeal={addMeal}
             isEdit={isEdit}
-            currentTask={currentTask}
-            editProduct={editProduct}
+            currentMeal={currentMeal}
+            editProduct={editMeal}
           />
         )}
         <Navbar
@@ -39,8 +39,8 @@ export default function Home({
           openModal={openModal}
         />
         <Card
-          products={products}
-          deleteProduct={deleteProduct}
+          meals={meals}
+          deleteMeal={deleteMeal}
           openModal={openModal}
           login={isLoggedIn}
           addToCart={addToCart}

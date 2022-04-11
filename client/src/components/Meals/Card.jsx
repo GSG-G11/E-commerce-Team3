@@ -1,8 +1,8 @@
 import React from 'react';
 
 export default function Card({
-  products,
-  deleteProduct,
+  meals,
+  deleteMeal,
   openModal,
   login,
   addToCart,
@@ -13,7 +13,7 @@ export default function Card({
   if (page === 'main') {
     check = true;
   }
-  return products.map(({ id, img_url, name, price, category }) => {
+  return meals.map(({ id, img_url, name, price, category }) => {
     return (
       <div key={id.toString()} className="card">
         <img src={img_url} alt="product img" width="150px" height="150px" />
@@ -21,7 +21,7 @@ export default function Card({
         <p>{price}</p>
         <p>{category}</p>
         {check && login && (
-          <button onClick={() => deleteProduct(id)}>DELETE</button>
+          <button onClick={() => deleteMeal(id)}>DELETE</button>
         )}
         {!check && !login && (
           <button onClick={() => deleteFromCart(id)}>DELETE</button>

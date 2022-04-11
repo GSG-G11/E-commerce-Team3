@@ -3,7 +3,7 @@ import Card from '../Meals/Card';
 import Navbar from '../Navbar/Navbar';
 
 export default function Cart({
-  products,
+  meals,
   page = 'cart',
   deleteFromCart,
   isLoggedIn,
@@ -17,7 +17,7 @@ export default function Cart({
         handleLogout={handleLogout}
         openModal={openModal}
       />
-      <Card products={products} page={page} deleteFromCart={deleteFromCart} />
+      <Card meals={meals} page={page} deleteFromCart={deleteFromCart} />
     </>
   );
 }
