@@ -10,6 +10,7 @@ export default function Card({
   page,
   deleteFromCart,
   isFiltered,
+  selectedCategory
 }) {
   let check = false;
   if (page === 'main') {
@@ -19,6 +20,11 @@ export default function Card({
   if (isFiltered) {
     meals = filteredMeals
   }
+
+ if(selectedCategory !== 'all'){
+  const arr = meals.filter(meal => meal.category === selectedCategory)
+  meals = arr;
+ } 
 
   return meals.map(({ id, img_url, name, price, category }) => {
     return (
@@ -41,5 +47,7 @@ export default function Card({
         )}
       </div>
     );
-  });
-}
+  })
+ }
+  
+
