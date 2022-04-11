@@ -1,6 +1,10 @@
 import React from 'react';
 
-export default function Card({ products, deleteProduct, displayProduct, login,addToCart}) {
+export default function Card({ products, deleteProduct, displayProduct, login,addToCart, page,deleteFromCart}) {
+  let check = false; 
+  if(page==="main"){
+    check = true;
+  }
   return products.map(({ id, img_url, name, price, category }) => {
     return (
       <div key={id.toString()} className="card">
@@ -8,9 +12,10 @@ export default function Card({ products, deleteProduct, displayProduct, login,ad
         <h3>{name}</h3>
         <p>{price}</p>
         <p>{category}</p>
-        {login && <button onClick={() => deleteProduct(id)}>DELETE</button> }
-        {login && <button onClick={() => displayProduct('update',id)} >EDIT</button>}
-        {!login && <button onClick={(e) => addToCart(e,id)}>Add to cart</button>}
+        {check && login && <button onClick={() => deleteProduct(id)}>DELETE</button> }
+        {!check && !login && <button onClick={() => deleteFromCart(id)}>DELETE</button> }
+        {check && login && <button onClick={() => displayProduct('update',id)} >EDIT</button>}
+        {check && !login && <button onClick={(e) => addToCart(e,id)}>Add to cart</button>}
       </div>
     );
   });

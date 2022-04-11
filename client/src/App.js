@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Card from './components/Card/Card';
+import Cart from './components/Cart/Cart';
 import Login from './components/Login/Login';
 import Products from './components/Modal/Products';
-
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 
 import swal from 'sweetalert';
 import Swal from 'sweetalert2';
@@ -171,18 +171,80 @@ export default class App extends Component {
     const currentTask = this.state.products.filter(
       (product) => product.id === id
     );
-    cart.push(currentTask[0]);
-    this.setState({
-      cart: cart,
+
+    let check = [];
+
+    if (cart.length > 0) {
+      check = cart.filter((product) => product.id === id);
+    }
+    if (!check.length > 0) {
+      cart.push(currentTask[0]);
+      this.setState({
+        cart: cart,
+      });
+      this.addToLocalStorage('cart', cart);
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Your product added successfully',
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    } else {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Your product is already added',
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
+  };
+
+  deleteFromCart = (id) => {
+    const { cart } = this.state;
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn-alert btn-success',
+        cancelButton: 'btn-alert btn-danger',
+      },
+      buttonsStyling: false,
     });
-    this.addToLocalStorage('cart', cart);
-    Swal.fire({
-      position: 'center',
-      icon: 'success',
-      title: 'Your product added successfully',
-      showConfirmButton: false,
-      timer: 2000,
-    });
+
+    swalWithBootstrapButtons
+      .fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'question',
+        showCancelButton: true,
+        cancelButtonText: 'No, cancel!',
+        confirmButtonText: 'Yes, delete it!',
+        reverseButtons: false,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          const newCart = cart.filter((product) => product.id !== id);
+          this.setState({
+            cart: newCart,
+          });
+          this.addToLocalStorage('cart', newCart);
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Your product deleted successfully',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: "Don't worry, Your product is safe!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      });
   };
 
   componentDidMount() {
@@ -215,11 +277,13 @@ export default class App extends Component {
       products,
       isEdit,
       currentTask,
+      cart,
     } = this.state;
     return (
       <BrowserRouter>
         <div>
           <>
+            {!login && <Link to='/cart'>cart</Link>}
             {!login && <button onClick={this.handleLoginButton}>Login</button>}
             {displayLogin && <Login handleLogin={this.handleLogin} />}
             {login && (
@@ -246,9 +310,20 @@ export default class App extends Component {
                   displayProduct={this.displayProduct}
                   login={login}
                   addToCart={this.addToCart}
+                  page='main'
                 />
               )}
               exact
+            />
+            <Route
+              path='/cart'
+              render={(props) => (
+                <Cart
+                  products={cart}
+                  {...props}
+                  deleteFromCart={this.deleteFromCart}
+                />
+              )}
             />
           </Switch>
         </div>
