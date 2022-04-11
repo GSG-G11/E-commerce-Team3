@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Card({ products, deleteProduct }) {
+export default function Card({ products, deleteProduct, displayProduct, login}) {
   return products.map(({ id, img_url, name, price, category }) => {
     return (
       <div key={id.toString()} className="card">
@@ -8,8 +8,10 @@ export default function Card({ products, deleteProduct }) {
         <h3>{name}</h3>
         <p>{price}</p>
         <p>{category}</p>
-        <button onClick={() => deleteProduct(id)}>DELETE</button>
-        <button>EDIT</button>
+  
+         {login && <button onClick={() => deleteProduct(id)}>DELETE</button> }
+          { login && <button onClick={() => displayProduct('update',id)} >EDIT</button>}
+  
       </div>
     );
   });
