@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import Card from './components/Card/Card';
+import Card from './components/Meals/Card';
 import Cart from './components/Cart/Cart';
 import Login from './components/Login/Login';
-import Products from './components/Modal/Products';
+import Products from './components/Modal/MealsForm';
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 
-import swal from 'sweetalert';
 import Swal from 'sweetalert2';
 
 import './App.css';
@@ -28,7 +27,11 @@ export default class App extends Component {
     e.preventDefault();
     const { username, password } = e.target;
     if (!username.value.trim() || !password.value.trim()) {
-      swal('error', 'Username and Password are required', 'error');
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Username and Password are required',
+      });
     }
     this.addToLocalStorage('username', username.value);
     this.setState({ login: username.value });

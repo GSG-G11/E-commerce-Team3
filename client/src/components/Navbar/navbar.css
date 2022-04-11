@@ -1,0 +1,62 @@
+
+.navbar {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.rightSide {
+  margin: 25px 0;
+}
+
+/* Logo Style*/
+.logo {
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.logo-span {
+  background-color: var(--main);
+  color: var(--white);
+  padding: 3px;
+  border-radius: 50px;
+  margin-right: 2px;
+  font-size: 23px;
+}
+
+/* Search Input Style */
+input.search {
+  background: #f5f5f5;
+  border: 1px solid #c4c4c4;
+  padding: 8px;
+  border-radius: 12px;
+}
+
+input.search:focus {
+  border: 1px solid var(--main);
+}
+
+/* Icon Style */
+lord-icon {
+  margin: 0 10px;
+}
+
+/* Button Style */
+.btn {
+  background-color: var(--main);
+  border: none;
+  color: var(--white);
+  border-radius: 20px;
+  padding: 10px;
+  width: 100px;
+  font-weight: 900;
+  margin: 0.2rem;
+}
+
+.btn:hover {
+  background-color: var(--white);
+  color: var(--main);
+  border: 1px solid var(--main);
+}
