@@ -1,60 +1,79 @@
 import React, { Component } from 'react';
-import Card from './components/Card/Card';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+
+import Card from './components/Meals/Card';
 import Cart from './components/Cart/Cart';
-import Login from './components/Login/Login';
-import Products from './components/Modal/Products';
-import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 
-import swal from 'sweetalert';
 import Swal from 'sweetalert2';
-
 import './App.css';
+import Home from './components/Home/Home';
 export default class App extends Component {
   state = {
-    login: '',
+    isLoggedIn: localStorage.isLoggedIn ? true : false,
     displayLogin: false,
-    displayProducts: false,
-    products: [],
+    meals: [],
     isEdit: false,
-    currentTask: {},
+    isOpen: false,
+    currentMeal: {},
     cart: JSON.parse(localStorage.getItem('cart')) || [],
   };
 
+  // ! Add to Local Storage Function
   addToLocalStorage = (key, value) => {
     localStorage.setItem(key, JSON.stringify(value));
   };
 
+  // ! Login Functions
   handleLogin = (e) => {
     e.preventDefault();
     const { username, password } = e.target;
     if (!username.value.trim() || !password.value.trim()) {
-      swal('error', 'Username and Password are required', 'error');
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Username and Password are required',
+      });
+    } else {
+      this.addToLocalStorage('isLoggedIn', true);
+      this.setState({ isLoggedIn: true });
+      this.closeModal('login');
     }
-    this.addToLocalStorage('username', username.value);
-    this.setState({ login: username.value });
   };
 
-  handleLoginButton = (e) => {
-    this.setState({ displayLogin: !this.state.displayLogin });
+  // ! Logout Function
+  handleLogout = (e) => {
+    this.addToLocalStorage('isLoggedIn', false);
+    this.setState({ isLoggedIn: false });
   };
 
-  displayProduct = (value, id) => {
-    this.setState({ displayProducts: !this.state.displayProducts });
+  // ! Modal Functions
+  openModal = (value, id) => {
+    this.setState({ isOpen: true });
     if (value === 'update') {
       this.setState({ isEdit: true });
-      const currentTask = this.state.products.filter(
-        (product) => product.id === id
-      );
-      this.setState({ currentTask: currentTask[0] });
+      const currentMeal = this.state.meals.filter((meal) => meal.id === id);
+      this.setState({ currentMeal: currentMeal[0] });
+    } else if (value === 'login') {
+      this.setState({ displayLogin: true });
+      this.setState({ isOpen: false });
     } else {
       this.setState({ isEdit: false });
+      this.setState({ displayLogin: false });
     }
   };
 
-  addProduct = (e) => {
+  closeModal = (value) => {
+    if (value === 'update') this.setState({ isEdit: false });
+    else if (value === 'login') this.setState({ displayLogin: false });
+    else this.setState({ isEdit: false });
+    this.setState({ isOpen: false });
+  };
+
+  // ! Meal Function - Add
+  addMeal = (e) => {
     e.preventDefault();
     const { name, price, description, img, categories } = e.target;
-    const product = {
+    const meal = {
       name: name.value,
       price: price.value,
       description: description.value,
@@ -62,22 +81,25 @@ export default class App extends Component {
       category: categories.value,
     };
 
-    fetch('/api/v1/product', {
+    fetch('/api/v1/meal', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
       },
-      body: JSON.stringify(product),
+      body: JSON.stringify(meal),
     })
       .then((res) => res.json())
       .then((data) =>
         this.setState({
-          products: [data.rows[0], ...this.state.products],
+          meals: [data.rows[0], ...this.state.meals],
         })
       );
+
+    this.closeModal('add');
   };
 
-  deleteProduct = (id) => {
+  // ! Meal Function - Delete
+  deleteMeal = (id) => {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn-alert btn-success',
@@ -98,7 +120,7 @@ export default class App extends Component {
       })
       .then((result) => {
         if (result.isConfirmed) {
-          fetch(`/api/v1/product/${id}`, {
+          fetch(`/api/v1/meal/${id}`, {
             method: 'DELETE',
             headers: {
               'content-type': 'application/json',
@@ -107,9 +129,7 @@ export default class App extends Component {
             .then((res) => {
               if (res.status === 200) {
                 this.setState({
-                  products: this.state.products.filter(
-                    (product) => product.id !== id
-                  ),
+                  meals: this.state.meals.filter((meal) => meal.id !== id),
                 });
               }
             })
@@ -118,7 +138,7 @@ export default class App extends Component {
           Swal.fire({
             position: 'center',
             icon: 'error',
-            title: "Don't worry, Your product is safe!",
+            title: "Don't worry, Your meal is safe!",
             showConfirmButton: false,
             timer: 1500,
           });
@@ -126,17 +146,14 @@ export default class App extends Component {
       });
   };
 
-  editProductButton = (id) => {
-    this.setState({ isEdit: true });
-  };
-
-  editProduct = (e) => {
+  // ! Meal Function - Update
+  editMeal = (e) => {
     e.preventDefault();
-    const { products, currentTask } = this.state;
+    const { meals, currentMeal } = this.state;
     const { name, price, description, img, categories } = e.target;
-    const id = currentTask.id;
+    const id = currentMeal.id;
 
-    const upadateProduct = {
+    const upadateMeal = {
       id: id,
       name: name.value,
       price: price.value,
@@ -145,40 +162,38 @@ export default class App extends Component {
       category: categories.value,
     };
 
-    fetch(`/api/v1/product/${id}`, {
+    fetch(`/api/v1/meal/${id}`, {
       method: 'PUT',
       headers: {
         'content-type': 'application/json',
       },
-      body: JSON.stringify(upadateProduct),
+      body: JSON.stringify(upadateMeal),
     })
       .then((res) => res.json())
       .then((data) => {
-        const allProducts = products.map((product) => {
-          if (product.id === data.rows[0].id) {
-            return upadateProduct;
+        const allMeals = meals.map((meal) => {
+          if (meal.id === data.rows[0].id) {
+            return upadateMeal;
           } else {
-            return product;
+            return meal;
           }
         });
-        this.setState({ products: allProducts });
+        this.setState({ meals: allMeals });
       });
+    this.closeModal('update');
   };
 
+  // ! Meal Function - Add to Cart
   addToCart = (e, id) => {
     e.preventDefault();
     const { cart } = this.state;
-    const currentTask = this.state.products.filter(
-      (product) => product.id === id
-    );
-
+    const currentMeal = this.state.meals.filter((meal) => meal.id === id);
     let check = [];
-
     if (cart.length > 0) {
-      check = cart.filter((product) => product.id === id);
+      check = cart.filter((meal) => meal.id === id);
     }
     if (!check.length > 0) {
-      cart.push(currentTask[0]);
+      cart.push(currentMeal[0]);
       this.setState({
         cart: cart,
       });
@@ -186,7 +201,7 @@ export default class App extends Component {
       Swal.fire({
         position: 'center',
         icon: 'success',
-        title: 'Your product added successfully',
+        title: 'Your meal added successfully',
         showConfirmButton: false,
         timer: 2000,
       });
@@ -194,13 +209,14 @@ export default class App extends Component {
       Swal.fire({
         position: 'center',
         icon: 'error',
-        title: 'Your product is already added',
+        title: 'Your meal is already added',
         showConfirmButton: false,
         timer: 2000,
       });
     }
   };
 
+  // ! Meal Function - Remove from Cart
   deleteFromCart = (id) => {
     const { cart } = this.state;
     const swalWithBootstrapButtons = Swal.mixin({
@@ -223,7 +239,7 @@ export default class App extends Component {
       })
       .then((result) => {
         if (result.isConfirmed) {
-          const newCart = cart.filter((product) => product.id !== id);
+          const newCart = cart.filter((meal) => meal.id !== id);
           this.setState({
             cart: newCart,
           });
@@ -231,7 +247,7 @@ export default class App extends Component {
           Swal.fire({
             position: 'center',
             icon: 'success',
-            title: 'Your product deleted successfully',
+            title: 'Your meal deleted successfully',
             showConfirmButton: false,
             timer: 1500,
           });
@@ -239,7 +255,7 @@ export default class App extends Component {
           Swal.fire({
             position: 'center',
             icon: 'error',
-            title: "Don't worry, Your product is safe!",
+            title: "Don't worry, Your meal is safe!",
             showConfirmButton: false,
             timer: 1500,
           });
@@ -248,7 +264,7 @@ export default class App extends Component {
   };
 
   componentDidMount() {
-    fetch('/api/v1/products', {
+    fetch('/api/v1/meals', {
       method: 'GET',
       headers: {
         'content-type': 'application/json',
@@ -261,7 +277,7 @@ export default class App extends Component {
       })
       .then((data) => {
         this.setState({
-          products: data,
+          meals: data,
         });
       })
       .catch((err) => {
@@ -271,57 +287,67 @@ export default class App extends Component {
 
   render() {
     const {
-      login,
       displayLogin,
-      displayProducts,
-      products,
+      isOpen,
+      meals,
       isEdit,
-      currentTask,
+      currentMeal,
       cart,
+      isLoggedIn,
     } = this.state;
     return (
       <BrowserRouter>
         <div>
-          <>
-            {!login && <Link to='/cart'>cart</Link>}
-            {!login && <button onClick={this.handleLoginButton}>Login</button>}
-            {displayLogin && <Login handleLogin={this.handleLogin} />}
-            {login && (
-              <button onClick={() => this.displayProduct('add')}>Add</button>
-            )}
-            {displayProducts && (
-              <Products
-                addProduct={this.addProduct}
-                editProductButton={this.editProductButton}
-                isEdit={isEdit}
-                currentTask={currentTask}
-                editProduct={this.editProduct}
-              />
-            )}
-          </>
           <Switch>
             <Route
-              path='/'
+              path="/"
               render={(props) => (
-                <Card
-                  products={products}
+                <Home
                   {...props}
-                  deleteProduct={this.deleteProduct}
-                  displayProduct={this.displayProduct}
-                  login={login}
+                  isLoggedIn={isLoggedIn}
+                  handleLogout={this.handleLogout}
+                  meals={meals}
+                  deleteMeal={this.deleteMeal}
+                  openModal={this.openModal}
                   addToCart={this.addToCart}
-                  page='main'
+                  handleLogin={this.handleLogin}
+                  displayLogin={displayLogin}
+                  isOpen={isOpen}
+                  addMeal={this.addMeal}
+                  isEdit={isEdit}
+                  currentMeal={currentMeal}
+                  editMeal={this.editMeal}
+                  page="main"
                 />
               )}
               exact
             />
+
             <Route
-              path='/cart'
+              path="/"
+              render={(props) => (
+                <Card
+                  meals={meals}
+                  {...props}
+                  deleteMeal={this.deleteMeal}
+                  openModal={this.openModal}
+                  addToCart={this.addToCart}
+                  page="main"
+                />
+              )}
+              exact
+            />
+
+            <Route
+              path="/cart"
               render={(props) => (
                 <Cart
-                  products={cart}
                   {...props}
+                  meals={cart}
                   deleteFromCart={this.deleteFromCart}
+                  isLoggedIn={isLoggedIn}
+                  handleLogout={this.handleLogout}
+                  openModal={this.openModal}
                 />
               )}
             />
