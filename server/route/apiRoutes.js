@@ -6,9 +6,9 @@ const {
   editProductController,
 } = require('../controllers');
 
-apiRouters.post('/api/v1/product', addProductController);
-apiRouters.get('/api/v1/products', getProductController);
-apiRouters.delete('/api/v1/product/:id', deleteProductController);
-apiRouters.put('/api/v1/product/:id', editProductController);
+apiRouters.post('/api/v1/meal', addProductController);
+apiRouters.get('/api/v1/meals', getProductController);
+apiRouters.delete('/api/v1/meal/:id', deleteProductController);
+apiRouters.put('/api/v1/meal/:id', editProductController);
 
 module.exports = apiRouters;

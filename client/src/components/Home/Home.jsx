@@ -19,6 +19,7 @@ export default function Home({
   editMeal,
   isOpen,
   isEdit,
+  searchByName,
 }) {
   return (
     <>
@@ -37,6 +38,7 @@ export default function Home({
           isLoggedIn={isLoggedIn}
           handleLogout={handleLogout}
           openModal={openModal}
+          searchByName={searchByName}
         />
         <Card
           meals={meals}

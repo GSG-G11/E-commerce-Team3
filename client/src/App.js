@@ -16,6 +16,7 @@ export default class App extends Component {
     isOpen: false,
     currentMeal: {},
     cart: JSON.parse(localStorage.getItem('cart')) || [],
+    filteredMeals:[],
   };
 
   // ! Add to Local Storage Function
@@ -285,6 +286,12 @@ export default class App extends Component {
       });
   }
 
+  searchByName(word){
+    const {meals} = this.state;
+    const filtered = meals.filter(meal => meal.name.includes(word))
+    this.setState({filteredMeals: filtered});
+  }
+
   render() {
     const {
       displayLogin,
@@ -317,6 +324,7 @@ export default class App extends Component {
                   isEdit={isEdit}
                   currentMeal={currentMeal}
                   editMeal={this.editMeal}
+                  searchByName={this.searchByName}
                   page="main"
                 />
               )}
