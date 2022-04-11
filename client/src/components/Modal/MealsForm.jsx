@@ -1,11 +1,6 @@
 import React from 'react';
 
-<<<<<<< HEAD:client/src/components/Modal/Products.jsx
-export default function Products({ addProduct, isEdit, currentTask ,editProduct}) {
-  let sumbitFun = addProduct;
-=======
 export default function Products({ addMeal, isEdit, currentMeal, editMeal }) {
->>>>>>> 8e46e5f8a6959e67f1b3b2bd9cfdff24a5cd78da:client/src/components/Modal/MealsForm.jsx
   let type = 'Add';
   let sumbitFun = addMeal;
   let nameValue = '';
