@@ -1,14 +1,14 @@
 const apiRouters = require('express').Router();
 const {
-  addProductController,
-  getProductController,
-  deleteProductController,
-  editProductController,
+  addMealController,
+  getMealsController,
+  deleteMealController,
+  editMealController,
 } = require('../controllers');
 
-apiRouters.post('/api/v1/product', addProductController);
-apiRouters.get('/api/v1/products', getProductController);
-apiRouters.delete('/api/v1/product/:id', deleteProductController);
-apiRouters.put('/api/v1/product/:id', editProductController);
+apiRouters.post('/api/v1/meal', addMealController);
+apiRouters.get('/api/v1/meals', getMealsController);
+apiRouters.delete('/api/v1/meal/:id', deleteMealController);
+apiRouters.put('/api/v1/meal/:id', editMealController);
 
 module.exports = apiRouters;

@@ -1,11 +1,11 @@
-const addProductController = require('./addProductController');
-const getProductController = require('./getProductsController');
-const deleteProductController = require('./deleteProductController');
-const editProductController = require('./editProductController');
+const addMealController = require('./addMealController');
+const getMealsController = require('./getMealsController');
+const deleteMealController = require('./deleteMealController');
+const editMealController = require('./editMealController');
 
 module.exports = {
-  addProductController,
-  getProductController,
-  deleteProductController,
-  editProductController,
+  addMealController,
+  getMealsController,
+  deleteMealController,
+  editMealController,
 };
