@@ -350,7 +350,7 @@ export default class App extends Component {
         <div>
           <Switch>
             <Route
-              path='/'
+              path="/"
               render={(props) => (
                 <Home
                   {...props}
@@ -375,14 +375,14 @@ export default class App extends Component {
                   handleChange={this.handleChange}
                   selectedCategory={selectedCategory}
                   price={price}
-                  page='main'
+                  page="main"
                   getMealDetails={this.getMealDetails}
                 />
               )}
               exact
             />
             <Route
-              path='/cart'
+              path="/cart"
               render={(props) => (
                 <Cart
                   {...props}
@@ -392,11 +392,12 @@ export default class App extends Component {
                   handleLogout={this.handleLogout}
                   openModal={this.openModal}
                   price={price}
+                  cart={cart.length}
                 />
               )}
             />
             <Route
-              path='/meal/:id'
+              path="/meal/:id"
               render={(props) => (
                 <MealDetail
                   {...props}

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 export default function CartIcon({cart}) {
   return (
     <Link to="/cart">
-      <span class="cart-basket">{cart}</span>
+      <span className="cart-basket">{cart}</span>
       <lord-icon
         src="https://cdn.lordicon.com/slkvcfos.json"
         trigger="hover"
