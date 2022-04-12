@@ -394,7 +394,17 @@ export default class App extends Component {
             />
              <Route
               path="/meal/:id"
-              render={(props) => ( <MealDetail  {...props} mealDetails={mealDetails}/>)}
+              render={(props) => ( 
+              <MealDetail  
+                {...props} 
+                mealDetails={mealDetails}  
+                isLoggedIn={isLoggedIn}
+                handleLogout={this.handleLogout}
+                handleLogin={this.handleLogin}
+                displayLogin={displayLogin}
+                isOpen={isOpen}
+                openModal={this.openModal}
+                />)}
             />
           </Switch>
         </div>
