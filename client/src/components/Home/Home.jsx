@@ -12,6 +12,7 @@ export default function Home({
   meals,
   filteredMeals,
   addToCart,
+  cart,
   deleteMeal,
   handleLogout,
   handleLogin,
@@ -25,7 +26,9 @@ export default function Home({
   searchByName,
   isFiltered,
   handleChange,
-  selectedCategory
+  selectedCategory,
+  price,
+  getMealDetails
 }) {
   
   
@@ -40,7 +43,7 @@ export default function Home({
             addMeal={addMeal}
             isEdit={isEdit}
             currentMeal={currentMeal}
-            editProduct={editMeal}
+            editMeal={editMeal}
           />
         )}
         <Navbar
@@ -48,6 +51,7 @@ export default function Home({
           handleLogout={handleLogout}
           openModal={openModal}
           searchByName={searchByName}
+          cart={cart}
         />
          <Header />
         <Filter handleChange={handleChange}/>

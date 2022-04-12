@@ -5,6 +5,8 @@ import Cart from './components/Cart/Cart';
 import Swal from 'sweetalert2';
 import './App.css';
 import Home from './components/Home/Home';
+import MealDetail from './components/MealDetails/MealDetails';
+
 export default class App extends Component {
   state = {
     isLoggedIn: localStorage.isLoggedIn ? true : false,
@@ -16,8 +18,9 @@ export default class App extends Component {
     cart: JSON.parse(localStorage.getItem('cart')) || [],
     filteredMeals: [],
     isFiltered: false,
-    price: 0,
+    price: 'none',
     selectedCategory: 'all',
+    mealDetails: {},
   };
 
   // ! Add to Local Storage Function
@@ -100,6 +103,15 @@ export default class App extends Component {
     this.closeModal('add');
   };
 
+  deleteFromCartGeneral = (id) => {
+    const { cart } = this.state;
+    const newCart = cart.filter((meal) => meal.id !== id);
+    this.setState({
+      cart: newCart,
+    });
+    this.addToLocalStorage('cart', newCart);
+  };
+
   // ! Meal Function - Delete
   deleteMeal = (id) => {
     const swalWithBootstrapButtons = Swal.mixin({
@@ -122,6 +134,7 @@ export default class App extends Component {
       })
       .then((result) => {
         if (result.isConfirmed) {
+          this.deleteFromCartGeneral(id);
           fetch(`/api/v1/meal/${id}`, {
             method: 'DELETE',
             headers: {
@@ -154,7 +167,6 @@ export default class App extends Component {
     const { meals, currentMeal } = this.state;
     const { name, price, description, img, categories } = e.target;
     const id = currentMeal.id;
-
     const upadateMeal = {
       id: id,
       name: name.value,
@@ -241,11 +253,7 @@ export default class App extends Component {
       })
       .then((result) => {
         if (result.isConfirmed) {
-          const newCart = cart.filter((meal) => meal.id !== id);
-          this.setState({
-            cart: newCart,
-          });
-          this.addToLocalStorage('cart', newCart);
+          this.deleteFromCartGeneral(id);
           Swal.fire({
             position: 'center',
             icon: 'success',
@@ -265,7 +273,7 @@ export default class App extends Component {
       });
   };
 
-  // ! ! Meal Function - Search by name
+  // ! Meal Function - Search by name
   searchByName = (word) => {
     if (!word) {
       this.setState({ isFiltered: false });
@@ -281,6 +289,29 @@ export default class App extends Component {
   handleChange = (event) => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
+  };
+
+  // ! ! Meal Function - Meal Details
+  getMealDetails = (id) => {
+    fetch(`/api/v1/meal/${id}`, {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json',
+      },
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        this.setState({
+          mealDetails: data[0],
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   componentDidMount() {
@@ -317,19 +348,22 @@ export default class App extends Component {
       filteredMeals,
       isFiltered,
       selectedCategory,
+      price,
+      mealDetails,
     } = this.state;
     return (
       <BrowserRouter>
         <div>
           <Switch>
             <Route
-              path="/"
+              path='/'
               render={(props) => (
                 <Home
                   {...props}
                   isLoggedIn={isLoggedIn}
                   handleLogout={this.handleLogout}
                   meals={meals}
+                  cart={cart.length}
                   filteredMeals={filteredMeals}
                   isFiltered={isFiltered}
                   deleteMeal={this.deleteMeal}
@@ -343,23 +377,46 @@ export default class App extends Component {
                   currentMeal={currentMeal}
                   editMeal={this.editMeal}
                   searchByName={this.searchByName}
-                  filterMeals={this.filterMeals}
                   handleChange={this.handleChange}
                   selectedCategory={selectedCategory}
-                  page="main"
+                  price={price}
+                  page='main'
+                  getMealDetails={this.getMealDetails}
                 />
               )}
               exact
             />
             <Route
-              path="/cart"
+              path='/cart'
               render={(props) => (
                 <Cart
                   {...props}
+                  filteredMeals={filteredMeals}
+                  searchByName={this.searchByName}
+                  isFiltered={isFiltered}
+                  handleChange={this.handleChange}
+                  selectedCategory={selectedCategory}
+                  price={price}
                   meals={cart}
                   deleteFromCart={this.deleteFromCart}
                   isLoggedIn={isLoggedIn}
                   handleLogout={this.handleLogout}
+                  openModal={this.openModal}
+                  cart={cart.length}
+                />
+              )}
+            />
+            <Route
+              path='/meal/:id'
+              render={(props) => (
+                <MealDetail
+                  {...props}
+                  mealDetails={mealDetails}
+                  isLoggedIn={isLoggedIn}
+                  handleLogout={this.handleLogout}
+                  handleLogin={this.handleLogin}
+                  displayLogin={displayLogin}
+                  isOpen={isOpen}
                   openModal={this.openModal}
                 />
               )}

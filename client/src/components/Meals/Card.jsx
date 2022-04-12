@@ -1,5 +1,6 @@
 import React from 'react';
 import './cards.css'
+import { Link } from 'react-router-dom';
 
 export default function Card({
  meal,
@@ -9,6 +10,7 @@ export default function Card({
   addToCart,
   page,
   deleteFromCart,
+  getMealDetails
  
 }) {
  const {id,img_url,price ,category,name} =meal
@@ -34,6 +36,9 @@ export default function Card({
           </div>
        
         )}
+        <Link to={`/meal/${id}`}>
+          <button onClick={() => getMealDetails(id)}>More Details</button>
+        </Link>
       </div>
       
     );

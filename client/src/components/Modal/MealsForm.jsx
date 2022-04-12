@@ -18,6 +18,7 @@ export default function Products({ addMeal, isEdit, currentMeal, editMeal }) {
     imgValue = currentMeal.img_url;
     categoryValue = currentMeal.category;
   }
+
   return (
     <>
       <h1>Products</h1>
