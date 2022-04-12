@@ -1,8 +1,9 @@
-const { addMeal, getMeals, deleteMeal, editMael } = require('./queries');
+const { addMeal, getMeals, deleteMeal, editMael, getMeal } = require('./queries');
 
 module.exports = {
   addMeal,
   getMeals,
   deleteMeal,
   editMael,
+  getMeal,
 };
