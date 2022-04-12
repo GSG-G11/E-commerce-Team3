@@ -31,15 +31,15 @@ export default function Home({
   
   return (
     <>
-      <div className='background'></div>
-      <div className='main'>
+      <div className="background"></div>
+      <div className="main">
         {displayLogin && <Login handleLogin={handleLogin} />}
         {isOpen && (
           <Products
             addMeal={addMeal}
             isEdit={isEdit}
             currentMeal={currentMeal}
-            editProduct={editMeal}
+            editMeal={editMeal}
           />
         )}
         <Navbar
@@ -48,7 +48,7 @@ export default function Home({
           openModal={openModal}
           searchByName={searchByName}
         />
-        <Filter handleChange={handleChange}/>
+        <Filter handleChange={handleChange} />
         <Card
           meals={meals}
           filteredMeals={filteredMeals}
@@ -59,7 +59,7 @@ export default function Home({
           addToCart={addToCart}
           selectedCategory={selectedCategory}
           getMealDetails={getMealDetails}
-          page='main'
+          page="main"
         />
       </div>
     </>

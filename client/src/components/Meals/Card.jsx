@@ -26,8 +26,8 @@ export default function Card({
 
   return meals.map(({ id, img_url, name, price, category }) => {
     return (
-      <div key={id.toString()} className="card" onClick={() => getMealDetails(id)}>
-        <img src={img_url} alt="product img" width="150px" height="150px" />
+      <div key={id.toString()} className="card">
+        <img src={img_url} alt="meal img" width="150px" height="150px" />
         <h3>{name}</h3>
         <p>{price}</p>
         <p>{category}</p>
@@ -43,7 +43,9 @@ export default function Card({
         {page === 'main' && !login && (
           <button onClick={(e) => addToCart(e, id)}>Add to cart</button>
         )}
-        <Link to={`/meal/${id}`} ><button>More Details</button></Link>
+        <Link to={`/meal/${id}`}>
+          <button onClick={() => getMealDetails(id)}>More Details</button>
+        </Link>
       </div>
     );
   })
