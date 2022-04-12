@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Card({
   meals,
@@ -10,7 +11,8 @@ export default function Card({
   page,
   deleteFromCart,
   isFiltered,
-  selectedCategory
+  selectedCategory,
+  getMealDetails
 }) {
 
   if (isFiltered) {
@@ -24,7 +26,7 @@ export default function Card({
 
   return meals.map(({ id, img_url, name, price, category }) => {
     return (
-      <div key={id.toString()} className="card">
+      <div key={id.toString()} className="card" onClick={() => getMealDetails(id)}>
         <img src={img_url} alt="product img" width="150px" height="150px" />
         <h3>{name}</h3>
         <p>{price}</p>
@@ -41,6 +43,7 @@ export default function Card({
         {page === 'main' && !login && (
           <button onClick={(e) => addToCart(e, id)}>Add to cart</button>
         )}
+        <Link to={`/meal/${id}`} ><button>More Details</button></Link>
       </div>
     );
   })
