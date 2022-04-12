@@ -20,12 +20,13 @@ export default function Cards({
     const arr = meals.filter((meal) => meal.category === selectedCategory);
     meals = arr;
   }
-
   return (
+
     <div className='cards'>
       {meals.map((meal) => {
+      
         return (
-          <Card
+          <Card  key={meal.id}
             meal={meal}
             deleteMeal={deleteMeal}
             openModal={openModal}

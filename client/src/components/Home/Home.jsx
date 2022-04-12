@@ -30,7 +30,7 @@ export default function Home({
   price,
   getMealDetails
 }) {
-  
+ 
   
   return (
     <>
