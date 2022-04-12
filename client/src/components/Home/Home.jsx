@@ -26,21 +26,22 @@ export default function Home({
   isFiltered,
   handleChange,
   selectedCategory,
+  price,
   getMealDetails
 }) {
   
   
   return (
     <>
-      <div className='background'></div>
-      <div className='main'>
+      <div className="background"></div>
+      <div className="main">
         {displayLogin && <Login handleLogin={handleLogin} />}
         {isOpen && (
           <Products
             addMeal={addMeal}
             isEdit={isEdit}
             currentMeal={currentMeal}
-            editProduct={editMeal}
+            editMeal={editMeal}
           />
         )}
         <Navbar
@@ -50,7 +51,7 @@ export default function Home({
           searchByName={searchByName}
           cart={cart}
         />
-        <Filter handleChange={handleChange}/>
+        <Filter handleChange={handleChange} />
         <Card
           meals={meals}
           filteredMeals={filteredMeals}
@@ -60,8 +61,9 @@ export default function Home({
           login={isLoggedIn}
           addToCart={addToCart}
           selectedCategory={selectedCategory}
+          price={price}
           getMealDetails={getMealDetails}
-          page='main'
+          page="main"
         />
       </div>
     </>
