@@ -11,6 +11,7 @@ export default function Home({
   meals,
   filteredMeals,
   addToCart,
+  cart,
   deleteMeal,
   handleLogout,
   handleLogin,
@@ -47,6 +48,7 @@ export default function Home({
           handleLogout={handleLogout}
           openModal={openModal}
           searchByName={searchByName}
+          cart={cart}
         />
         <Filter handleChange={handleChange}/>
         <Card
