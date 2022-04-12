@@ -268,7 +268,7 @@ export default class App extends Component {
       });
   };
 
-  // ! ! Meal Function - Search by name
+  // ! Meal Function - Search by name
   searchByName = (word) => {
     if (!word) {
       this.setState({ isFiltered: false });
