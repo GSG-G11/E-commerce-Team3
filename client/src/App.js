@@ -9,7 +9,7 @@ import MealDetail from './components/MealDetails/MealDetails';
 
 export default class App extends Component {
   state = {
-    isLoggedIn: localStorage.isLoggedIn ? true : false,
+    isLoggedIn: localStorage.isLoggedIn === true ? true : false,
     displayLogin: false,
     meals: [],
     isEdit: false,
@@ -322,14 +322,11 @@ export default class App extends Component {
       },
     })
       .then((response) => {
-       
         if (response.status === 200) {
-           
           return response.json();
         }
       })
       .then((data) => {
-    
         this.setState({
           meals: data,
         });
@@ -360,7 +357,7 @@ export default class App extends Component {
         <div>
           <Switch>
             <Route
-              path='/'
+              path="/"
               render={(props) => (
                 <Home
                   {...props}
@@ -383,15 +380,16 @@ export default class App extends Component {
                   searchByName={this.searchByName}
                   handleChange={this.handleChange}
                   selectedCategory={selectedCategory}
-                  price={price}
-                  page='main'
                   getMealDetails={this.getMealDetails}
+                  closeModal={this.closeModal}
+                  price={price}
+                  page="main"
                 />
               )}
               exact
             />
             <Route
-              path='/cart'
+              path="/cart"
               render={(props) => (
                 <Cart
                   {...props}
@@ -407,12 +405,11 @@ export default class App extends Component {
                   handleLogout={this.handleLogout}
                   openModal={this.openModal}
                   cart={cart.length}
-                 
                 />
               )}
             />
             <Route
-              path='/meal/:id'
+              path="/meal/:id"
               render={(props) => (
                 <MealDetail
                   {...props}
