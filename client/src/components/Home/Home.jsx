@@ -32,8 +32,8 @@ export default function Home({
   
   return (
     <>
-      <div className='background'></div>
-      <div className='main'>
+      <div className="background"></div>
+      <div className="main">
         {displayLogin && <Login handleLogin={handleLogin} />}
         {isOpen && (
           <Products
@@ -49,7 +49,7 @@ export default function Home({
           openModal={openModal}
           searchByName={searchByName}
         />
-        <Filter handleChange={handleChange}/>
+        <Filter handleChange={handleChange} />
         <Card
           meals={meals}
           filteredMeals={filteredMeals}
@@ -61,7 +61,7 @@ export default function Home({
           selectedCategory={selectedCategory}
           price={price}
           getMealDetails={getMealDetails}
-          page='main'
+          page="main"
         />
       </div>
     </>
