@@ -350,7 +350,7 @@ export default class App extends Component {
         <div>
           <Switch>
             <Route
-              path="/"
+              path='/'
               render={(props) => (
                 <Home
                   {...props}
@@ -371,33 +371,37 @@ export default class App extends Component {
                   currentMeal={currentMeal}
                   editMeal={this.editMeal}
                   searchByName={this.searchByName}
-                  filterMeals={this.filterMeals}
                   handleChange={this.handleChange}
                   selectedCategory={selectedCategory}
                   price={price}
-                  page="main"
+                  page='main'
                   getMealDetails={this.getMealDetails}
                 />
               )}
               exact
             />
             <Route
-              path="/cart"
+              path='/cart'
               render={(props) => (
                 <Cart
                   {...props}
+                  filteredMeals={filteredMeals}
+                  searchByName={this.searchByName}
+                  isFiltered={isFiltered}
+                  handleChange={this.handleChange}
+                  selectedCategory={selectedCategory}
+                  price={price}
                   meals={cart}
                   deleteFromCart={this.deleteFromCart}
                   isLoggedIn={isLoggedIn}
                   handleLogout={this.handleLogout}
                   openModal={this.openModal}
-                  price={price}
                   cart={cart.length}
                 />
               )}
             />
             <Route
-              path="/meal/:id"
+              path='/meal/:id'
               render={(props) => (
                 <MealDetail
                   {...props}
