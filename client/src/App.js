@@ -357,6 +357,7 @@ export default class App extends Component {
                   isLoggedIn={isLoggedIn}
                   handleLogout={this.handleLogout}
                   meals={meals}
+                  cart={cart.length}
                   filteredMeals={filteredMeals}
                   isFiltered={isFiltered}
                   deleteMeal={this.deleteMeal}
@@ -395,6 +396,7 @@ export default class App extends Component {
                   isLoggedIn={isLoggedIn}
                   handleLogout={this.handleLogout}
                   openModal={this.openModal}
+                  cart={cart.length}
                 />
               )}
             />

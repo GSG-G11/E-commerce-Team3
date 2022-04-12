@@ -14,6 +14,7 @@ export default function Cart({
   selectedCategory,
   isFiltered,
   searchByName,
+  cart,
   filteredMeals
 })
 {
@@ -24,6 +25,7 @@ export default function Cart({
         isLoggedIn={isLoggedIn}
         handleLogout={handleLogout}
         openModal={openModal}
+        cart={cart}
       />
         <Filter handleChange={handleChange} />
       

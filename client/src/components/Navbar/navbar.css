@@ -72,3 +72,13 @@ input.search-input:focus {
   color: var(--main);
   font-weight: 700;
 }
+
+.cart-basket {
+  font-size: .6rem;
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  color: #fff;
+  background-color: var(--main);
+  border-radius: 50%;
+}
