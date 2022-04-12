@@ -10,7 +10,8 @@ export default function Card({
   page,
   deleteFromCart,
   isFiltered,
-  selectedCategory
+  selectedCategory,
+  price
 }) {
   let check = false;
   if (page === 'main') {
@@ -23,6 +24,11 @@ export default function Card({
 
  if(selectedCategory !== 'all'){
   const arr = meals.filter(meal => meal.category === selectedCategory)
+  meals = arr;
+ } 
+ 
+ if(price !== 'none'){
+  const arr = meals.filter(meal => meal.price < price)
   meals = arr;
  } 
 

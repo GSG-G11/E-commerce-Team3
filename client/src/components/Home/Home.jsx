@@ -24,7 +24,8 @@ export default function Home({
   searchByName,
   isFiltered,
   handleChange,
-  selectedCategory
+  selectedCategory,
+  price
 }) {
   
   
@@ -57,6 +58,7 @@ export default function Home({
           login={isLoggedIn}
           addToCart={addToCart}
           selectedCategory={selectedCategory}
+          price={price}
           page='main'
         />
       </div>

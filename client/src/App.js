@@ -14,11 +14,10 @@ export default class App extends Component {
     isOpen: false,
     currentMeal: {},
     cart: JSON.parse(localStorage.getItem('cart')) || [],
-    filteredMeals:[],
+    filteredMeals: [],
     isFiltered: false,
-   price:0,
-   selectedCategory:'all',
-
+    price: 'none',
+    selectedCategory: 'all',
   };
 
   // ! Add to Local Storage Function
@@ -289,13 +288,15 @@ export default class App extends Component {
   }
 
   searchByName = (word) => {
-    if (!word){
-      this.setState({isFiltered:false});
+    if (!word) {
+      this.setState({ isFiltered: false });
     }
-    const {meals} = this.state;
-    const filtered = meals.filter(meal => meal.name.toLowerCase().includes(word.toLowerCase()))
-    this.setState({filteredMeals: filtered, isFiltered : true });
-  }
+    const { meals } = this.state;
+    const filtered = meals.filter((meal) =>
+      meal.name.toLowerCase().includes(word.toLowerCase())
+    );
+    this.setState({ filteredMeals: filtered, isFiltered: true });
+  };
 
   handleChange = (event) => {
     const { name, value } = event.target;
@@ -313,14 +314,15 @@ export default class App extends Component {
       isLoggedIn,
       filteredMeals,
       isFiltered,
-      selectedCategory
+      selectedCategory,
+      price,
     } = this.state;
     return (
       <BrowserRouter>
         <div>
           <Switch>
             <Route
-              path="/"
+              path='/'
               render={(props) => (
                 <Home
                   {...props}
@@ -343,13 +345,14 @@ export default class App extends Component {
                   filterMeals={this.filterMeals}
                   handleChange={this.handleChange}
                   selectedCategory={selectedCategory}
-                  page="main"
+                  price={price}
+                  page='main'
                 />
               )}
               exact
             />
             <Route
-              path="/cart"
+              path='/cart'
               render={(props) => (
                 <Cart
                   {...props}
