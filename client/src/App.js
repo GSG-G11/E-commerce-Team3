@@ -18,7 +18,7 @@ export default class App extends Component {
     cart: JSON.parse(localStorage.getItem('cart')) || [],
     filteredMeals: [],
     isFiltered: false,
-    price: 0,
+    price: 'none',
     selectedCategory: 'all',
     mealDetails: {},
   };
@@ -157,7 +157,6 @@ export default class App extends Component {
     const { meals, currentMeal } = this.state;
     const { name, price, description, img, categories } = e.target;
     const id = currentMeal.id;
-
     const upadateMeal = {
       id: id,
       name: name.value,
@@ -343,6 +342,7 @@ export default class App extends Component {
       filteredMeals,
       isFiltered,
       selectedCategory,
+      price,
       mealDetails,
     } = this.state;
     return (
@@ -350,7 +350,7 @@ export default class App extends Component {
         <div>
           <Switch>
             <Route
-              path="/"
+              path='/'
               render={(props) => (
                 <Home
                   {...props}
@@ -373,14 +373,15 @@ export default class App extends Component {
                   filterMeals={this.filterMeals}
                   handleChange={this.handleChange}
                   selectedCategory={selectedCategory}
+                  price={price}
+                  page='main'
                   getMealDetails={this.getMealDetails}
-                  page="main"
                 />
               )}
               exact
             />
             <Route
-              path="/cart"
+              path='/cart'
               render={(props) => (
                 <Cart
                   {...props}
@@ -389,11 +390,12 @@ export default class App extends Component {
                   isLoggedIn={isLoggedIn}
                   handleLogout={this.handleLogout}
                   openModal={this.openModal}
+                  price={price}
                 />
               )}
             />
             <Route
-              path="/meal/:id"
+              path='/meal/:id'
               render={(props) => (
                 <MealDetail
                   {...props}

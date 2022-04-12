@@ -9,7 +9,9 @@ export default function Cart({
   isLoggedIn,
   handleLogout,
   openModal,
-}) {
+  price
+})
+{
   return (
     <>
       <Navbar
@@ -22,6 +24,7 @@ export default function Cart({
         page={page}
         deleteFromCart={deleteFromCart}
         selectedCategory='all'
+        price={price}
       />
     </>
   );

@@ -25,6 +25,7 @@ export default function Home({
   isFiltered,
   handleChange,
   selectedCategory,
+  price,
   getMealDetails
 }) {
   
@@ -58,6 +59,7 @@ export default function Home({
           login={isLoggedIn}
           addToCart={addToCart}
           selectedCategory={selectedCategory}
+          price={price}
           getMealDetails={getMealDetails}
           page="main"
         />
