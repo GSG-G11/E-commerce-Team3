@@ -18,7 +18,6 @@ export default function Card({
        <div key={id.toString()} className="card">
         <img src={img_url} alt="product img" width="150px" height="150px" className='meal-img'/>
         <h3 className='meal-title'>{name}</h3>
-        {/* <p className='meal-price'>{price}</p> */}
         <p className='meal-category'>{category}</p>
         {page === 'main' && login && (
           <button onClick={() => deleteMeal(id)} className='meal-btn btn-edit'>DELETE</button>
