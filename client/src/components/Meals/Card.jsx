@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Card({
   meals,
@@ -11,12 +12,9 @@ export default function Card({
   deleteFromCart,
   isFiltered,
   selectedCategory,
-  price
+  price,
+  getMealDetails
 }) {
-  let check = false;
-  if (page === 'main') {
-    check = true;
-  }
 
   if (isFiltered) {
     meals = filteredMeals
@@ -34,26 +32,25 @@ export default function Card({
 
   return meals.map(({ id, img_url, name, price, category }) => {
     return (
-      <div key={id.toString()} className="card">
+      <div key={id.toString()} className="card" onClick={() => getMealDetails(id)}>
         <img src={img_url} alt="product img" width="150px" height="150px" />
         <h3>{name}</h3>
         <p>{price}</p>
         <p>{category}</p>
-        {check && login && (
+        {page === 'main' && login && (
           <button onClick={() => deleteMeal(id)}>DELETE</button>
         )}
-        {!check && !login && (
+        {page !== 'main' && !login && (
           <button onClick={() => deleteFromCart(id)}>DELETE</button>
         )}
-        {check && login && (
+        {page === 'main' && login && (
           <button onClick={() => openModal('update', id)}>EDIT</button>
         )}
-        {check && !login && (
+        {page === 'main' && !login && (
           <button onClick={(e) => addToCart(e, id)}>Add to cart</button>
         )}
+        <Link to={`/meal/${id}`} ><button>More Details</button></Link>
       </div>
     );
   })
  }
-  
-

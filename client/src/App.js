@@ -5,6 +5,8 @@ import Cart from './components/Cart/Cart';
 import Swal from 'sweetalert2';
 import './App.css';
 import Home from './components/Home/Home';
+import MealDetail from './components/MealDetails/MealDetails';
+
 export default class App extends Component {
   state = {
     isLoggedIn: localStorage.isLoggedIn ? true : false,
@@ -18,6 +20,7 @@ export default class App extends Component {
     isFiltered: false,
     price: 'none',
     selectedCategory: 'all',
+    mealDetails: {},
   };
 
   // ! Add to Local Storage Function
@@ -25,7 +28,7 @@ export default class App extends Component {
     localStorage.setItem(key, JSON.stringify(value));
   };
 
-  // ! Login Functions
+  // ! Login Function
   handleLogin = (e) => {
     e.preventDefault();
     const { username, password } = e.target;
@@ -265,6 +268,47 @@ export default class App extends Component {
       });
   };
 
+  // ! ! Meal Function - Search by name
+  searchByName = (word) => {
+    if (!word) {
+      this.setState({ isFiltered: false });
+    }
+    const { meals } = this.state;
+    const filtered = meals.filter((meal) =>
+      meal.name.toLowerCase().includes(word.toLowerCase())
+    );
+    this.setState({ filteredMeals: filtered, isFiltered: true });
+  };
+
+  // ! Meal Function - Handle change
+  handleChange = (event) => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
+  };
+
+  // ! ! Meal Function - Meal Details
+  getMealDetails = (id) => {
+    fetch(`/api/v1/meal/${id}`, {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json',
+      },
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        this.setState({
+          mealDetails: data[0],
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   componentDidMount() {
     fetch('/api/v1/meals', {
       method: 'GET',
@@ -287,22 +331,6 @@ export default class App extends Component {
       });
   }
 
-  searchByName = (word) => {
-    if (!word) {
-      this.setState({ isFiltered: false });
-    }
-    const { meals } = this.state;
-    const filtered = meals.filter((meal) =>
-      meal.name.toLowerCase().includes(word.toLowerCase())
-    );
-    this.setState({ filteredMeals: filtered, isFiltered: true });
-  };
-
-  handleChange = (event) => {
-    const { name, value } = event.target;
-    this.setState({ [name]: value });
-  };
-
   render() {
     const {
       displayLogin,
@@ -316,6 +344,7 @@ export default class App extends Component {
       isFiltered,
       selectedCategory,
       price,
+      mealDetails,
     } = this.state;
     return (
       <BrowserRouter>
@@ -347,6 +376,7 @@ export default class App extends Component {
                   selectedCategory={selectedCategory}
                   price={price}
                   page='main'
+                  getMealDetails={this.getMealDetails}
                 />
               )}
               exact
@@ -360,6 +390,21 @@ export default class App extends Component {
                   deleteFromCart={this.deleteFromCart}
                   isLoggedIn={isLoggedIn}
                   handleLogout={this.handleLogout}
+                  openModal={this.openModal}
+                />
+              )}
+            />
+            <Route
+              path='/meal/:id'
+              render={(props) => (
+                <MealDetail
+                  {...props}
+                  mealDetails={mealDetails}
+                  isLoggedIn={isLoggedIn}
+                  handleLogout={this.handleLogout}
+                  handleLogin={this.handleLogin}
+                  displayLogin={displayLogin}
+                  isOpen={isOpen}
                   openModal={this.openModal}
                 />
               )}

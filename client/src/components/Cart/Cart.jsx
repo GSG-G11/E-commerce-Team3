@@ -17,7 +17,12 @@ export default function Cart({
         handleLogout={handleLogout}
         openModal={openModal}
       />
-      <Card meals={meals} page={page} deleteFromCart={deleteFromCart} />
+      <Card
+        meals={meals}
+        page={page}
+        deleteFromCart={deleteFromCart}
+        selectedCategory='all'
+      />
     </>
   );
 }

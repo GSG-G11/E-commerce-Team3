@@ -25,7 +25,8 @@ export default function Home({
   isFiltered,
   handleChange,
   selectedCategory,
-  price
+  price,
+  getMealDetails
 }) {
   
   
@@ -59,6 +60,7 @@ export default function Home({
           addToCart={addToCart}
           selectedCategory={selectedCategory}
           price={price}
+          getMealDetails={getMealDetails}
           page='main'
         />
       </div>

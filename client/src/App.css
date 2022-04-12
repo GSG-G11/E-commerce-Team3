@@ -1,4 +1,13 @@
-.card{
-    background-color: gray;
-    margin: 2rem;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;500;700&display=swap');
+
+:root {
+  --main: #84b74d;
+  --white: #ffffff;
+  --border: #e6e6e6;
+  --black: #000000;
+}
+
+.card {
+  background-color: gray;
+  margin: 2rem;
 }
