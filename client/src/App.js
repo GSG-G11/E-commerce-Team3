@@ -103,6 +103,15 @@ export default class App extends Component {
     this.closeModal('add');
   };
 
+  deleteFromCartGeneral = (id) => {
+    const { cart } = this.state;
+    const newCart = cart.filter((meal) => meal.id !== id);
+    this.setState({
+      cart: newCart,
+    });
+    this.addToLocalStorage('cart', newCart);
+  };
+
   // ! Meal Function - Delete
   deleteMeal = (id) => {
     const swalWithBootstrapButtons = Swal.mixin({
@@ -125,6 +134,7 @@ export default class App extends Component {
       })
       .then((result) => {
         if (result.isConfirmed) {
+          this.deleteFromCartGeneral(id);
           fetch(`/api/v1/meal/${id}`, {
             method: 'DELETE',
             headers: {
@@ -243,11 +253,7 @@ export default class App extends Component {
       })
       .then((result) => {
         if (result.isConfirmed) {
-          const newCart = cart.filter((meal) => meal.id !== id);
-          this.setState({
-            cart: newCart,
-          });
-          this.addToLocalStorage('cart', newCart);
+          this.deleteFromCartGeneral(id);
           Swal.fire({
             position: 'center',
             icon: 'success',
