@@ -40,7 +40,7 @@ export default function Home({
             addMeal={addMeal}
             isEdit={isEdit}
             currentMeal={currentMeal}
-            editProduct={editMeal}
+            editMeal={editMeal}
           />
         )}
         <Navbar

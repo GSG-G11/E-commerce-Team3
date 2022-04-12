@@ -157,7 +157,6 @@ export default class App extends Component {
     const { meals, currentMeal } = this.state;
     const { name, price, description, img, categories } = e.target;
     const id = currentMeal.id;
-
     const upadateMeal = {
       id: id,
       name: name.value,
