@@ -25,10 +25,11 @@ export default function Card({
     meals = arr;
   } 
   
-  if(price !== 'none' && page === "main"){
+  if(price !== 'none'){
     const arr = meals.filter(meal => meal.price < price)
     meals = arr;
   } 
+
   return meals.map(({ id, img_url, name, price, category }) => {
     return (
       <div key={id.toString()} className="card">

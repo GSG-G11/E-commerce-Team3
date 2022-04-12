@@ -370,7 +370,6 @@ export default class App extends Component {
                   currentMeal={currentMeal}
                   editMeal={this.editMeal}
                   searchByName={this.searchByName}
-                  filterMeals={this.filterMeals}
                   handleChange={this.handleChange}
                   selectedCategory={selectedCategory}
                   price={price}
@@ -385,12 +384,17 @@ export default class App extends Component {
               render={(props) => (
                 <Cart
                   {...props}
+                  filteredMeals={filteredMeals}
+                  searchByName={this.searchByName}
+                  isFiltered={isFiltered}
+                  handleChange={this.handleChange}
+                  selectedCategory={selectedCategory}
+                  price={price}
                   meals={cart}
                   deleteFromCart={this.deleteFromCart}
                   isLoggedIn={isLoggedIn}
                   handleLogout={this.handleLogout}
                   openModal={this.openModal}
-                  price={price}
                 />
               )}
             />
