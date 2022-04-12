@@ -20,11 +20,9 @@
 }
 .main-text .desc-service{
   color: #84B74D;
-  font-size: 0.9rem;
+  font-size: 0.7rem;
 }
-.main-img{
-  /* width: 40%; */
-}
+
 .main-img .img{
   width: 100%;
   max-width: 100%;

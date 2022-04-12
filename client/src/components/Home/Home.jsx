@@ -1,6 +1,5 @@
 import React from 'react';
 import Login from '../Login/Login';
-import Card from '../Meals/Card';
 import Products from '../Modal/MealsForm';
 import Navbar from '../Navbar/Navbar';
 import Filter from '../Filter/filter';
@@ -53,7 +52,7 @@ export default function Home({
          <Header />
         <Filter handleChange={handleChange}/>
     
-        <Card
+        <Cards
         meals={meals}
         filteredMeals={filteredMeals}
         isFiltered={isFiltered}
