@@ -1,0 +1,17 @@
+.mealDetails {
+    width: 90%;
+    margin: 2rem auto;
+    display: flex;
+    justify-content: space-around;
+    font-family: 'Montserrat', sans-serif;
+    align-items: start;
+    background-color: var(--main);
+}
+
+.mealimg{
+    width: 50%; 
+    height: 85%
+}
+.DataSide{
+    margin: 25px 0;
+}
