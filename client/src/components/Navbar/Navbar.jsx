@@ -13,6 +13,7 @@ export default function Navbar({
   handleLogout,
   openModal,
   searchByName,
+  cart,
 }) {
   defineLordIconElement(loadAnimation);
   return (
@@ -22,7 +23,7 @@ export default function Navbar({
       <div className="rightSide">
         {isLoggedIn && <Button word="Add" onClickFunction={openModal} />}
         {isLoggedIn && <Button word="Logout" onClickFunction={handleLogout} />}
-        {!isLoggedIn && <CartIcon />}
+        {!isLoggedIn && <CartIcon cart={cart}/>}
         {!isLoggedIn && (
           <Button word="Login" onClickFunction={() => openModal('login')} />
         )}

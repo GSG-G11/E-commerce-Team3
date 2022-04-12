@@ -9,21 +9,22 @@ export default function Cart({
   isLoggedIn,
   handleLogout,
   openModal,
-  price
-})
-{
+  price,
+  cart,
+}) {
   return (
     <>
       <Navbar
         isLoggedIn={isLoggedIn}
         handleLogout={handleLogout}
         openModal={openModal}
+        cart={cart}
       />
       <Card
         meals={meals}
         page={page}
         deleteFromCart={deleteFromCart}
-        selectedCategory='all'
+        selectedCategory="all"
         price={price}
       />
     </>
