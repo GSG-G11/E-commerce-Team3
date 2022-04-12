@@ -390,6 +390,7 @@ export default class App extends Component {
                   isLoggedIn={isLoggedIn}
                   handleLogout={this.handleLogout}
                   openModal={this.openModal}
+                  price={price}
                 />
               )}
             />
