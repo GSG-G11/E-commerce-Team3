@@ -1,10 +1,11 @@
 import React from 'react';
 import Login from '../Login/Login';
-import Card from '../Meals/Card';
 import Products from '../Modal/MealsForm';
 import Navbar from '../Navbar/Navbar';
 import Filter from '../Filter/filter';
 import './home.css';
+import Header from '../Header/Header';
+import Cards from '../Meals/Cards';
 
 export default function Home({
   isLoggedIn,
@@ -29,12 +30,13 @@ export default function Home({
   price,
   getMealDetails
 }) {
-  
+ 
   
   return (
     <>
-      <div className="background"></div>
-      <div className="main">
+      <div className='background'></div>
+      <div className='main'>
+      <div className="conatiner">
         {displayLogin && <Login handleLogin={handleLogin} />}
         {isOpen && (
           <Products
@@ -51,21 +53,24 @@ export default function Home({
           searchByName={searchByName}
           cart={cart}
         />
-        <Filter handleChange={handleChange} />
-        <Card
-          meals={meals}
-          filteredMeals={filteredMeals}
-          isFiltered={isFiltered}
-          deleteMeal={deleteMeal}
-          openModal={openModal}
-          login={isLoggedIn}
-          addToCart={addToCart}
-          selectedCategory={selectedCategory}
-          price={price}
-          getMealDetails={getMealDetails}
-          page="main"
-        />
+         <Header />
+        <Filter handleChange={handleChange}/>
+    
+        <Cards
+        meals={meals}
+        filteredMeals={filteredMeals}
+        isFiltered={isFiltered}
+        deleteMeal={deleteMeal}
+        openModal={openModal}
+        login={isLoggedIn}
+        addToCart={addToCart}
+        selectedCategory={selectedCategory}
+        page='main'
+      />
+       
       </div>
+      </div>
+    
     </>
   );
 }

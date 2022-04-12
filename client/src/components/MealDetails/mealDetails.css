@@ -9,8 +9,8 @@
 
 .meal-img {
     width: 35%; 
-    max-width:250px;
-    max-height: 250px;
+    width: 120px;
+    height: 120px;
 
 }
 

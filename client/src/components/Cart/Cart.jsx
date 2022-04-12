@@ -1,7 +1,7 @@
 import React from 'react';
-import Card from '../Meals/Card';
 import Navbar from '../Navbar/Navbar';
 import Filter from '../Filter/filter';
+import Cards from '../Meals/Cards';
 export default function Cart({
   meals,
   page = 'cart',
@@ -18,6 +18,7 @@ export default function Cart({
   filteredMeals
 })
 {
+
   return (
     <>
       <Navbar
@@ -29,7 +30,7 @@ export default function Cart({
       />
         <Filter handleChange={handleChange} />
       
-      <Card
+      <Cards
         meals={meals}
         filteredMeals={filteredMeals}
         page={page}

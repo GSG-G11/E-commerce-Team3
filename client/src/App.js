@@ -322,11 +322,14 @@ export default class App extends Component {
       },
     })
       .then((response) => {
+       
         if (response.status === 200) {
+           
           return response.json();
         }
       })
       .then((data) => {
+    
         this.setState({
           meals: data,
         });
@@ -351,6 +354,7 @@ export default class App extends Component {
       price,
       mealDetails,
     } = this.state;
+
     return (
       <BrowserRouter>
         <div>
@@ -403,6 +407,7 @@ export default class App extends Component {
                   handleLogout={this.handleLogout}
                   openModal={this.openModal}
                   cart={cart.length}
+                 
                 />
               )}
             />
