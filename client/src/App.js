@@ -14,11 +14,10 @@ export default class App extends Component {
     isOpen: false,
     currentMeal: {},
     cart: JSON.parse(localStorage.getItem('cart')) || [],
-    filteredMeals:[],
+    filteredMeals: [],
     isFiltered: false,
-   price:0,
-   selectedCategory:'all',
-
+    price: 0,
+    selectedCategory: 'all',
   };
 
   // ! Add to Local Storage Function
@@ -26,7 +25,7 @@ export default class App extends Component {
     localStorage.setItem(key, JSON.stringify(value));
   };
 
-  // ! Login Functions
+  // ! Login Function
   handleLogin = (e) => {
     e.preventDefault();
     const { username, password } = e.target;
@@ -266,6 +265,24 @@ export default class App extends Component {
       });
   };
 
+  // ! ! Meal Function - Search by name
+  searchByName = (word) => {
+    if (!word) {
+      this.setState({ isFiltered: false });
+    }
+    const { meals } = this.state;
+    const filtered = meals.filter((meal) =>
+      meal.name.toLowerCase().includes(word.toLowerCase())
+    );
+    this.setState({ filteredMeals: filtered, isFiltered: true });
+  };
+
+  // ! Meal Function - Handle change
+  handleChange = (event) => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
+  };
+
   componentDidMount() {
     fetch('/api/v1/meals', {
       method: 'GET',
@@ -288,20 +305,6 @@ export default class App extends Component {
       });
   }
 
-  searchByName = (word) => {
-    if (!word){
-      this.setState({isFiltered:false});
-    }
-    const {meals} = this.state;
-    const filtered = meals.filter(meal => meal.name.toLowerCase().includes(word.toLowerCase()))
-    this.setState({filteredMeals: filtered, isFiltered : true });
-  }
-
-  handleChange = (event) => {
-    const { name, value } = event.target;
-    this.setState({ [name]: value });
-  };
-
   render() {
     const {
       displayLogin,
@@ -313,7 +316,7 @@ export default class App extends Component {
       isLoggedIn,
       filteredMeals,
       isFiltered,
-      selectedCategory
+      selectedCategory,
     } = this.state;
     return (
       <BrowserRouter>

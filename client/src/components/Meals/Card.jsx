@@ -12,10 +12,6 @@ export default function Card({
   isFiltered,
   selectedCategory
 }) {
-  let check = false;
-  if (page === 'main') {
-    check = true;
-  }
 
   if (isFiltered) {
     meals = filteredMeals
@@ -33,21 +29,19 @@ export default function Card({
         <h3>{name}</h3>
         <p>{price}</p>
         <p>{category}</p>
-        {check && login && (
+        {page === 'main' && login && (
           <button onClick={() => deleteMeal(id)}>DELETE</button>
         )}
-        {!check && !login && (
+        {page !== 'main' && !login && (
           <button onClick={() => deleteFromCart(id)}>DELETE</button>
         )}
-        {check && login && (
+        {page === 'main' && login && (
           <button onClick={() => openModal('update', id)}>EDIT</button>
         )}
-        {check && !login && (
+        {page === 'main' && !login && (
           <button onClick={(e) => addToCart(e, id)}>Add to cart</button>
         )}
       </div>
     );
   })
  }
-  
-
