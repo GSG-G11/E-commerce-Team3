@@ -20,7 +20,7 @@ export default class App extends Component {
     isFiltered: false,
     price: 0,
     selectedCategory: 'all',
-    mealDetails:{}
+    mealDetails: {},
   };
 
   // ! Add to Local Storage Function
@@ -294,20 +294,20 @@ export default class App extends Component {
         'content-type': 'application/json',
       },
     })
-    .then((response) => {
-      if (response.status === 200) {
-        return response.json();
-      }
-    })
-    .then((data) => {
-      this.setState({
-        mealDetails: data[0],
+      .then((response) => {
+        if (response.status === 200) {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        this.setState({
+          mealDetails: data[0],
+        });
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  }
+  };
 
   componentDidMount() {
     fetch('/api/v1/meals', {
@@ -343,7 +343,7 @@ export default class App extends Component {
       filteredMeals,
       isFiltered,
       selectedCategory,
-      mealDetails
+      mealDetails,
     } = this.state;
     return (
       <BrowserRouter>
@@ -392,19 +392,20 @@ export default class App extends Component {
                 />
               )}
             />
-             <Route
+            <Route
               path="/meal/:id"
-              render={(props) => ( 
-              <MealDetail  
-                {...props} 
-                mealDetails={mealDetails}  
-                isLoggedIn={isLoggedIn}
-                handleLogout={this.handleLogout}
-                handleLogin={this.handleLogin}
-                displayLogin={displayLogin}
-                isOpen={isOpen}
-                openModal={this.openModal}
-                />)}
+              render={(props) => (
+                <MealDetail
+                  {...props}
+                  mealDetails={mealDetails}
+                  isLoggedIn={isLoggedIn}
+                  handleLogout={this.handleLogout}
+                  handleLogin={this.handleLogin}
+                  displayLogin={displayLogin}
+                  isOpen={isOpen}
+                  openModal={this.openModal}
+                />
+              )}
             />
           </Switch>
         </div>

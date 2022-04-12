@@ -27,7 +27,7 @@ export default function Card({
   return meals.map(({ id, img_url, name, price, category }) => {
     return (
       <div key={id.toString()} className="card">
-        <img src={img_url} alt="product img" width="150px" height="150px" />
+        <img src={img_url} alt="meal img" width="150px" height="150px" />
         <h3>{name}</h3>
         <p>{price}</p>
         <p>{category}</p>
