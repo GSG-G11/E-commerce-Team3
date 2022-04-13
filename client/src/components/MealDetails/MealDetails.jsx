@@ -50,6 +50,7 @@ export default function MealDetails({
           <p className="meal-category">{category}</p>
           <p className="meal-description">{description}</p>
           {!isLoggedIn && <button onClick={(e) =>addToCart(e,id)} className="Add">Add to cart</button>}
+          <button onClick={(e) =>history.push('/')} className="Add">Back to Home</button>
         </div>
       </div>
      </div>
