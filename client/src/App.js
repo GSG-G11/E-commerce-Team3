@@ -8,7 +8,6 @@ import Home from './components/Home/Home';
 import MealDetail from './components/MealDetails/MealDetails';
 
 export default class App extends Component {
-
   state = {
     isLoggedIn: JSON.parse(localStorage.getItem('isLoggedIn')) || false,
     displayLogin: false,
@@ -94,7 +93,7 @@ export default class App extends Component {
       name: name.value,
       price: price.value,
       description: description.value,
-      img_url: img_url.value,
+      img: img_url.value,
       category: categories.value,
     };
 
@@ -372,7 +371,7 @@ export default class App extends Component {
         <div>
           <Switch>
             <Route
-              path="/"
+              path='/'
               render={(props) => (
                 <Home
                   {...props}
@@ -398,13 +397,13 @@ export default class App extends Component {
                   getMealDetails={this.getMealDetails}
                   closeModal={this.closeModal}
                   price={price}
-                  page="main"
+                  page='main'
                 />
               )}
               exact
             />
             <Route
-              path="/cart"
+              path='/cart'
               render={(props) => (
                 <Cart
                   {...props}
@@ -423,11 +422,12 @@ export default class App extends Component {
                   displayLogin={displayLogin}
                   handleLogin={this.handleLogin}
                   closeModal={this.closeModal}
+                  getMealDetails={this.getMealDetails}
                 />
               )}
             />
             <Route
-              path="/meal/:id"
+              path='/meal/:id'
               render={(props) => (
                 <MealDetail
                   {...props}
