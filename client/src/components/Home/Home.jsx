@@ -7,34 +7,36 @@ import Header from '../Header/Header';
 import Cards from '../Meals/Cards';
 import './home.css';
 
-export default function Home({
-  isLoggedIn,
-  meals,
-  filteredMeals,
-  addToCart,
-  cart,
-  deleteMeal,
-  handleLogout,
-  handleLogin,
-  displayLogin,
-  currentMeal,
-  openModal,
-  closeModal,
-  addMeal,
-  editMeal,
-  isOpen,
-  isEdit,
-  searchByName,
-  isFiltered,
-  handleChange,
-  selectedCategory,
-  getMealDetails,
-  price,
-}) {
+export default function Home(props) {
+  const {
+    isLoggedIn,
+    meals,
+    filteredMeals,
+    addToCart,
+    cart,
+    deleteMeal,
+    handleLogout,
+    handleLogin,
+    displayLogin,
+    currentMeal,
+    openModal,
+    closeModal,
+    addMeal,
+    editMeal,
+    isOpen,
+    isEdit,
+    searchByName,
+    isFiltered,
+    handleChange,
+    selectedCategory,
+    getMealDetails,
+    price,
+    history
+  } = props;
   return (
     <>
       {displayLogin && (
-        <Login handleLogin={handleLogin} closeModal={closeModal} />
+        <Login handleLogin={handleLogin} closeModal={closeModal} history={history}/>
       )}
       {isOpen && (
         <Meals

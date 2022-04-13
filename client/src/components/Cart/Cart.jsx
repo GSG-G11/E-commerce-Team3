@@ -21,11 +21,16 @@ export default function Cart({
   displayLogin,
   closeModal,
   handleLogin,
+  history,
 }) {
   return (
     <>
       {displayLogin && (
-        <Login handleLogin={handleLogin} closeModal={closeModal} />
+        <Login
+          handleLogin={handleLogin}
+          closeModal={closeModal}
+          history={history}
+        />
       )}
       <div className="main">
         <div className="container">

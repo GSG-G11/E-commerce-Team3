@@ -8,6 +8,7 @@ import Home from './components/Home/Home';
 import MealDetail from './components/MealDetails/MealDetails';
 
 export default class App extends Component {
+
   state = {
     isLoggedIn: JSON.parse(localStorage.getItem('isLoggedIn')) || false,
     displayLogin: false,
