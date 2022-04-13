@@ -1,5 +1,4 @@
 const express = require('express');
-// const { join } = require('path');
 
 const app = express();
 app.disable('x-powered-by');

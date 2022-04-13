@@ -2,6 +2,8 @@ import React from 'react';
 import Navbar from '../Navbar/Navbar';
 import Filter from '../Filter/filter';
 import Cards from '../Meals/Cards';
+import Login from '../Login/Login';
+
 export default function Cart({
   meals,
   page = 'cart',
@@ -15,30 +17,38 @@ export default function Cart({
   isFiltered,
   searchByName,
   cart,
-  filteredMeals
-})
-{
-
+  filteredMeals,
+  displayLogin,
+  closeModal,
+  handleLogin
+}) {
+  console.log(openModal);
   return (
-    <>
-      <Navbar
-        searchByName={searchByName}
-        isLoggedIn={isLoggedIn}
-        handleLogout={handleLogout}
-        openModal={openModal}
-        cart={cart}
-      />
+   <>
+    {displayLogin && (
+      <Login handleLogin={handleLogin} closeModal={closeModal} />
+    )}
+    <div className="main">
+      <div className="container">
+        <Navbar
+          searchByName={searchByName}
+          isLoggedIn={isLoggedIn}
+          handleLogout={handleLogout}
+          openModal={openModal}
+          cart={cart}
+        />
         <Filter handleChange={handleChange} />
-      
-      <Cards
-        meals={meals}
-        filteredMeals={filteredMeals}
-        page={page}
-        isFiltered={isFiltered}
-        deleteFromCart={deleteFromCart}
-        selectedCategory={selectedCategory}
-        price={price}
-      />
-    </>
+        <Cards
+          meals={meals}
+          filteredMeals={filteredMeals}
+          page={page}
+          isFiltered={isFiltered}
+          deleteFromCart={deleteFromCart}
+          selectedCategory={selectedCategory}
+          price={price}
+        />
+      </div>
+    </div>
+   </>
   );
 }

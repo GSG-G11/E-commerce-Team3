@@ -5,9 +5,47 @@
   --white: #ffffff;
   --border: #e6e6e6;
   --black: #000000;
+  --background: #dae0e6;
+  --text: #000000;
+  --icon: #595959;
+  --placeholder: #9ea0a5;
+  --sub-icon: #999da5;
+  --active-background: #111317;
+  --title: #e1e6f0;
+  --border: #1b1f26;
 }
 
-/* .card {
-  background-color: gray;
-  margin: 2rem;
-} */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  height: 100vh;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--main);
+  border-radius: 50px;
+}
+
+::selection {
+  background-color: var(--main);
+}
+
+#root{
+  width: 100%;
+}

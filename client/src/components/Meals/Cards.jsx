@@ -10,7 +10,10 @@ export default function Cards({
   openModal,
   login,
   addToCart,
+  getMealDetails,
+  deleteFromCart,
   page,
+  price,
 }) {
   if (isFiltered) {
     meals = filteredMeals;
@@ -20,19 +23,26 @@ export default function Cards({
     const arr = meals.filter((meal) => meal.category === selectedCategory);
     meals = arr;
   }
-  return (
 
-    <div className='cards'>
+  if (price !== 'none') {
+    const arr = meals.filter((meal) => meal.price < price);
+    meals = arr;
+  }
+
+  return (
+    <div className="cards">
       {meals.map((meal) => {
-      
         return (
-          <Card  key={meal.id}
+          <Card
+            key={meal.id}
             meal={meal}
             deleteMeal={deleteMeal}
             openModal={openModal}
             login={login}
             addToCart={addToCart}
-            page='main'
+            page={page}
+            getMealDetails={getMealDetails}
+            deleteFromCart={deleteFromCart}
           />
         );
       })}

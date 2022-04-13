@@ -1,11 +1,11 @@
 import React from 'react';
 import Login from '../Login/Login';
-import Products from '../Modal/MealsForm';
+import Meals from '../Modal/MealsForm';
 import Navbar from '../Navbar/Navbar';
 import Filter from '../Filter/filter';
-import './home.css';
 import Header from '../Header/Header';
 import Cards from '../Meals/Cards';
+import './home.css';
 
 export default function Home({
   isLoggedIn,
@@ -19,6 +19,7 @@ export default function Home({
   displayLogin,
   currentMeal,
   openModal,
+  closeModal,
   addMeal,
   editMeal,
   isOpen,
@@ -27,50 +28,49 @@ export default function Home({
   isFiltered,
   handleChange,
   selectedCategory,
+  getMealDetails,
   price,
-  getMealDetails
 }) {
- 
-  
   return (
     <>
-      <div className='background'></div>
-      <div className='main'>
-      <div className="conatiner">
-        {displayLogin && <Login handleLogin={handleLogin} />}
-        {isOpen && (
-          <Products
-            addMeal={addMeal}
-            isEdit={isEdit}
-            currentMeal={currentMeal}
-            editMeal={editMeal}
-          />
-        )}
-        <Navbar
-          isLoggedIn={isLoggedIn}
-          handleLogout={handleLogout}
-          openModal={openModal}
-          searchByName={searchByName}
-          cart={cart}
+      {displayLogin && (
+        <Login handleLogin={handleLogin} closeModal={closeModal} />
+      )}
+      {isOpen && (
+        <Meals
+          addMeal={addMeal}
+          isEdit={isEdit}
+          currentMeal={currentMeal}
+          editMeal={editMeal}
+          closeModal={closeModal}
         />
-         <Header />
-        <Filter handleChange={handleChange}/>
-    
-        <Cards
-        meals={meals}
-        filteredMeals={filteredMeals}
-        isFiltered={isFiltered}
-        deleteMeal={deleteMeal}
-        openModal={openModal}
-        login={isLoggedIn}
-        addToCart={addToCart}
-        selectedCategory={selectedCategory}
-        page='main'
-      />
-       
+      )}
+      <div className="main">
+        <div className="container">
+          <Navbar
+            isLoggedIn={isLoggedIn}
+            handleLogout={handleLogout}
+            openModal={openModal}
+            searchByName={searchByName}
+            cart={cart}
+          />
+          <Header />
+          <Filter handleChange={handleChange} />
+          <Cards
+            meals={meals}
+            filteredMeals={filteredMeals}
+            isFiltered={isFiltered}
+            deleteMeal={deleteMeal}
+            openModal={openModal}
+            login={isLoggedIn}
+            addToCart={addToCart}
+            selectedCategory={selectedCategory}
+            getMealDetails={getMealDetails}
+            page="main"
+            price={price}
+          />
+        </div>
       </div>
-      </div>
-    
     </>
   );
 }

@@ -11,6 +11,50 @@ CREATE TABLE meals (
     img_url TEXT NOT NULL
 );
 
-INSERT INTO meals (name,description,category,price,img_url) VALUES ('Product 1','Lorem ipsum dolor sit amet ','Man',10,'https://m.media-amazon.com/images/I/81MySRhmDnL._AC_SL1500_.jpg');
+INSERT INTO
+    meals (name, description, category, price, img_url)
+VALUES
+    (
+        'Meat',
+        'Lorem ipsum dolor sit amet.Vel asperiores corporis aut modi cumque est cumque ipsum.Et consectetur incidunt non possimus vero non rerum saepe.',
+        'Meat',
+        22,
+        'https://j.top4top.io/p_22931vc7h1.png'
+    ),
+    (
+        'Meat',
+        'Lorem ipsum dolor sit amet.Vel asperiores corporis aut modi cumque est cumque ipsum.Et consectetur incidunt non possimus vero non rerum saepe.',
+        'Meat',
+        33,
+        'https://k.top4top.io/p_2293wwgep2.png'
+    ),
+    (
+        'Salad',
+        'Lorem ipsum dolor sit amet.Vel asperiores corporis aut modi cumque est cumque ipsum.Et consectetur incidunt non possimus vero non rerum saepe.',
+        'Salads',
+        33,
+        'https://a.top4top.io/p_2293axzjy4.png'
+    ),
+    (
+        'Soup',
+        'Lorem ipsum dolor sit amet.Vel asperiores corporis aut modi cumque est cumque ipsum.Et consectetur incidunt non possimus vero non rerum saepe.',
+        'Soups',
+        33,
+        'https://b.top4top.io/p_2293tsvro5.png'
+    ),
+    (
+        'Salads',
+        'Lorem ipsum dolor sit amet.Vel asperiores corporis aut modi cumque est cumque ipsum.Et consectetur incidunt non possimus vero non rerum saepe.',
+        'Salads',
+        13,
+        'https://c.top4top.io/p_2293rlgmk6.png'
+    ),
+    (
+        'Soup',
+        'Lorem ipsum dolor sit amet.Vel asperiores corporis aut modi cumque est cumque ipsum.Et consectetur incidunt non possimus vero non rerum saepe.',
+        'Soups',
+        15,
+        'https://c.top4top.io/p_22933slk31.png'
+    );
 
 COMMIT;

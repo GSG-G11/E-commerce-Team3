@@ -1,63 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;500;700&display=swap');
 .mealDetails {
-    width: 90%;
-    margin: 1.9rem auto;
-    display: flex;
-    justify-content: space-evenly;
-    font-family: 'Montserrat', sans-serif;
-    align-items: start;
+  width: 90%;
+  margin: 1.9rem auto;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  font-family: 'Montserrat', sans-serif;
+  align-items: start;
 }
-
-.meal-img {
-    width: 35%; 
-    width: 120px;
-    height: 120px;
-
+.mealDetails .meal-img{
+width: 40%;
 }
-
+.mealDetails img{
+  max-width: 100%;
+  margin-top: 20px;
+}
 .DataSide {
-    margin: 25px 0;
+  width: 40%;
+  margin: 25px 0;
+  font-family: 'Montserrat';
 }
 
 .meal-name {
-    font-size: 25px;
-    font-weight: 600;
-    text-decoration: none;
-    color: var(--black);
-    margin: 20px 0 0;
-}
-  
-.meal-price, .meal-category{
-    color: var(--black);
-    padding: 3px;
-    border-radius: 50px;
-    font-size: 23px;
-    margin: 20px 0 0;
+  font-size: 25px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--black);
+  margin: 20px 0 0;
 }
 
 .meal-description {
-    color: var(--black);
-    padding: 3px;
-    border-radius: 50px;
-    font-size: 23px; 
-    margin: 20px 0 0;
+  color: var(--black);
+  padding: 3px;
+  border-radius: 50px;
+  font-size: 1rem;
+  line-height: 1.8;
+  margin: auto;
+  opacity: 0.5;
+
 }
 
 .Add {
-    width: 138px;
-    height: 50px;
-    background: var(--main) 0% 0% padding-box;
-    border-radius: 45px;
-    border: none;
-    color: var(--white);
-    padding: 10px;
-    font-weight: 900;
-    margin: 0.2rem;
-  }
-  
+  width: 138px;
+  height: 50px;
+  background: var(--main) 0% 0% padding-box;
+  border-radius: 45px;
+  border: none;
+  color: var(--white);
+  padding: 10px;
+  font-weight: 900;
+  margin: 0.2rem;
+  margin: 1.2rem;
+  transition: 0.5s all ease-in-out;
+}
+
 .Add:hover {
-    background-color: var(--white);
-    border: 2px solid var(--main);
-    color: var(--main);
-    font-weight: 700;
-  }
-  
+  background-color: var(--white);
+  border: 2px solid var(--main);
+  color: var(--main);
+  font-weight: 700;
+}

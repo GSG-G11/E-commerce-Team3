@@ -9,7 +9,7 @@ import MealDetail from './components/MealDetails/MealDetails';
 
 export default class App extends Component {
   state = {
-    isLoggedIn: localStorage.isLoggedIn ? true : false,
+    isLoggedIn: JSON.parse(localStorage.getItem('isLoggedIn')) || false,
     displayLogin: false,
     meals: [],
     isEdit: false,
@@ -60,7 +60,7 @@ export default class App extends Component {
       this.setState({ currentMeal: currentMeal[0] });
     } else if (value === 'login') {
       this.setState({ displayLogin: true });
-      this.setState({ isOpen: false });
+      this.setState({ isOpen: false});
     } else {
       this.setState({ isEdit: false });
       this.setState({ displayLogin: false });
@@ -232,7 +232,6 @@ export default class App extends Component {
 
   // ! Meal Function - Remove from Cart
   deleteFromCart = (id) => {
-    const { cart } = this.state;
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn-alert btn-success',
@@ -291,7 +290,7 @@ export default class App extends Component {
     this.setState({ [name]: value });
   };
 
-  // ! ! Meal Function - Meal Details
+  // ! Meal Function - Meal Details
   getMealDetails = (id) => {
     fetch(`/api/v1/meal/${id}`, {
       method: 'GET',
@@ -322,14 +321,11 @@ export default class App extends Component {
       },
     })
       .then((response) => {
-       
         if (response.status === 200) {
-           
           return response.json();
         }
       })
       .then((data) => {
-    
         this.setState({
           meals: data,
         });
@@ -360,7 +356,7 @@ export default class App extends Component {
         <div>
           <Switch>
             <Route
-              path='/'
+              path="/"
               render={(props) => (
                 <Home
                   {...props}
@@ -383,15 +379,16 @@ export default class App extends Component {
                   searchByName={this.searchByName}
                   handleChange={this.handleChange}
                   selectedCategory={selectedCategory}
-                  price={price}
-                  page='main'
                   getMealDetails={this.getMealDetails}
+                  closeModal={this.closeModal}
+                  price={price}
+                  page="main"
                 />
               )}
               exact
             />
             <Route
-              path='/cart'
+              path="/cart"
               render={(props) => (
                 <Cart
                   {...props}
@@ -407,12 +404,14 @@ export default class App extends Component {
                   handleLogout={this.handleLogout}
                   openModal={this.openModal}
                   cart={cart.length}
-                 
+                  displayLogin={ displayLogin}
+                  handleLogin={this.handleLogin}
+                  closeModal={this.closeModal}
                 />
               )}
             />
             <Route
-              path='/meal/:id'
+              path="/meal/:id"
               render={(props) => (
                 <MealDetail
                   {...props}
