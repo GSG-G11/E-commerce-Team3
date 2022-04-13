@@ -1,5 +1,7 @@
 import React from 'react';
+import NoDataFound from '../NotFound/NoDataFound';
 import Card from './Card';
+
 
 export default function Cards({
   meals,
@@ -25,13 +27,13 @@ export default function Cards({
   }
 
   if (price !== 'none') {
-    const arr = meals.filter((meal) => meal.price < price);
+    const arr = meals.filter((meal) => meal.price <= price);
     meals = arr;
   }
 
   return (
     <div className="cards">
-      {meals.map((meal) => {
+      {meals.length ? (meals.map((meal) => {
         return (
           <Card
             key={meal.id}
@@ -43,9 +45,12 @@ export default function Cards({
             page={page}
             getMealDetails={getMealDetails}
             deleteFromCart={deleteFromCart}
-          />
+            />
         );
-      })}
+      })) : (
+        <NoDataFound/>
+      )
+    }
     </div>
   );
 }

@@ -31,7 +31,7 @@ export default function Meals({
       <div className="modal">
         <form onSubmit={sumbitFun}>
           <div className="header-modal">
-            <p className="modal-title">Add product</p>
+            <p className="modal-title">{type} Meal</p>
             <i
               onClick={() => closeModal('login')}
               className="fa-solid fa-xmark"
@@ -42,7 +42,8 @@ export default function Meals({
               type="text"
               name="name"
               defaultValue={nameValue}
-              placeholder="Add a new  meal"
+              placeholder="Add a new meal"
+              required
             />
           </div>
           <div className="field">
@@ -51,6 +52,7 @@ export default function Meals({
               name="price"
               defaultValue={priceValue}
               placeholder="Price"
+              required
             />
           </div>
           <div className="field">
@@ -59,6 +61,7 @@ export default function Meals({
               name="description"
               defaultValue={descValue}
               placeholder="Descrip The Meal"
+              required
             />
           </div>
           <div className="field">
@@ -67,6 +70,7 @@ export default function Meals({
               name="img_url"
               defaultValue={imgValue}
               placeholder="Link of Image"
+              required
             />
           </div>
           <div className="field">

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Cart from './components/Cart/Cart';
-
+import NotFound from './components/NotFound/NotFound';
 import Swal from 'sweetalert2';
 import './App.css';
 import Home from './components/Home/Home';
@@ -105,11 +105,11 @@ export default class App extends Component {
       body: JSON.stringify(meal),
     })
       .then((res) => res.json())
-      .then((data) =>
+      .then((data) => {
         this.setState({
-          meals: [data.rows[0], ...this.state.meals],
-        })
-      );
+          meals: [data.meals, ...this.state.meals],
+        });
+      });
 
     this.closeModal('add');
   };
@@ -199,10 +199,16 @@ export default class App extends Component {
         },
         body: JSON.stringify(this.state.upadateMeal),
       })
-        .then((res) => res.json())
+        .then((res) => {
+          if (res.status === 201) {
+            return res.json();
+          } else {
+            return (window.location.href = '/notFound');
+          }
+        })
         .then((data) => {
           const UpdatedMeals = this.state.meals;
-          const newMeal = data.rows[0];
+          const newMeal = data.meals;
           const index = this.state.meals.findIndex(
             (meal) => meal.id === newMeal.id
           );
@@ -438,9 +444,14 @@ export default class App extends Component {
                   displayLogin={displayLogin}
                   isOpen={isOpen}
                   openModal={this.openModal}
+                  cart={cart.length}
+                  addToCart={this.addToCart}
+                  closeModal={this.closeModal}
                 />
               )}
             />
+            <Route path='/notFound' component={NotFound} />
+            <Redirect to='/notFound' />
           </Switch>
         </div>
       </BrowserRouter>
