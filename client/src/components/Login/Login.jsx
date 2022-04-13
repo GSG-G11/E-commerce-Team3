@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import './login.css';
 
 export default function Login({ handleLogin, closeModal }) {
@@ -30,11 +29,9 @@ export default function Login({ handleLogin, closeModal }) {
             name='password'
           />
         </div>
-        <Link to ='/'>
         <button type="submit" className="login-btn">
           Login
         </button>
-        </Link>
       </form>
     </div>
   );

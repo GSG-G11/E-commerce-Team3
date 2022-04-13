@@ -13,6 +13,7 @@ export default function Card({
   getMealDetails,
 }) {
   const { id, img_url, price, category, name } = meal;
+
   return (
     <div key={id.toString()} className="card">
       <img src={img_url} alt="product img" className="meal-img" />
