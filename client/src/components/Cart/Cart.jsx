@@ -21,6 +21,7 @@ export default function Cart({
   displayLogin,
   closeModal,
   handleLogin,
+  getMealDetails,
   history,
 }) {
   return (
@@ -43,6 +44,7 @@ export default function Cart({
           />
           <Filter handleChange={handleChange} />
           <Cards
+            getMealDetails={getMealDetails}
             meals={meals}
             filteredMeals={filteredMeals}
             page={page}

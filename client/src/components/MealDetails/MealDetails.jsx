@@ -1,4 +1,5 @@
 import React from 'react';
+import Login from '../Login/Login';
 import Navbar from '../Navbar/Navbar';
 import './mealDetails.css';
 
@@ -10,10 +11,22 @@ export default function MealDetails({
   displayLogin,
   isOpen,
   openModal,
+  cart,
+  addToCart,
+  closeModal,
+  history
 }) {
-  const { img_url, name, price, category, description } = mealDetails;
+  const { img_url, name, price, category, description,id } = mealDetails;
   return (
-    
+    <>
+    {displayLogin && (
+      <Login
+        type="mealDetails"
+        handleLogin={handleLogin}
+        closeModal={closeModal}
+        history={history}
+      />
+    )}
     <div className='main'>
       <div className='container'>
       <Navbar
@@ -22,6 +35,7 @@ export default function MealDetails({
         handleLogin={handleLogin}
         displayLogin={displayLogin}
         isOpen={isOpen}
+        cart={cart}
         openModal={openModal}
       />
       <div className="mealDetails">
@@ -34,13 +48,14 @@ export default function MealDetails({
           <p className="meal-price">{price}$</p>
           <p className="meal-category">{category}</p>
           <p className="meal-description">{description}</p>
-          <button className="Add">Add to cart</button>
+          {!isLoggedIn && <button onClick={(e) =>addToCart(e,id)} className="Add">Add to cart</button>}
         </div>
       </div>
      </div>
 
     </div>
   
+    </>
     
   );
 }

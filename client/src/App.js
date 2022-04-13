@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Cart from './components/Cart/Cart';
-
+import NotFound from './components/NotFound/NotFound';
 import Swal from 'sweetalert2';
 import './App.css';
 import Home from './components/Home/Home';
 import MealDetail from './components/MealDetails/MealDetails';
 
 export default class App extends Component {
-
   state = {
     isLoggedIn: JSON.parse(localStorage.getItem('isLoggedIn')) || false,
     displayLogin: false,
@@ -94,7 +93,7 @@ export default class App extends Component {
       name: name.value,
       price: price.value,
       description: description.value,
-      img_url: img_url.value,
+      img: img_url.value,
       category: categories.value,
     };
 
@@ -106,11 +105,11 @@ export default class App extends Component {
       body: JSON.stringify(meal),
     })
       .then((res) => res.json())
-      .then((data) =>
+      .then((data) => {
         this.setState({
-          meals: [data.rows[0], ...this.state.meals],
-        })
-      );
+          meals: [data.meals, ...this.state.meals],
+        });
+      });
 
     this.closeModal('add');
   };
@@ -200,10 +199,16 @@ export default class App extends Component {
         },
         body: JSON.stringify(this.state.upadateMeal),
       })
-        .then((res) => res.json())
+        .then((res) => {
+          if (res.status === 201) {
+            return res.json();
+          } else {
+            return (window.location.href = '/notFound');
+          }
+        })
         .then((data) => {
           const UpdatedMeals = this.state.meals;
-          const newMeal = data.rows[0];
+          const newMeal = data.meals;
           const index = this.state.meals.findIndex(
             (meal) => meal.id === newMeal.id
           );
@@ -372,7 +377,7 @@ export default class App extends Component {
         <div>
           <Switch>
             <Route
-              path="/"
+              path='/'
               render={(props) => (
                 <Home
                   {...props}
@@ -398,13 +403,13 @@ export default class App extends Component {
                   getMealDetails={this.getMealDetails}
                   closeModal={this.closeModal}
                   price={price}
-                  page="main"
+                  page='main'
                 />
               )}
               exact
             />
             <Route
-              path="/cart"
+              path='/cart'
               render={(props) => (
                 <Cart
                   {...props}
@@ -423,11 +428,12 @@ export default class App extends Component {
                   displayLogin={displayLogin}
                   handleLogin={this.handleLogin}
                   closeModal={this.closeModal}
+                  getMealDetails={this.getMealDetails}
                 />
               )}
             />
             <Route
-              path="/meal/:id"
+              path='/meal/:id'
               render={(props) => (
                 <MealDetail
                   {...props}
@@ -438,9 +444,14 @@ export default class App extends Component {
                   displayLogin={displayLogin}
                   isOpen={isOpen}
                   openModal={this.openModal}
+                  cart={cart.length}
+                  addToCart={this.addToCart}
+                  closeModal={this.closeModal}
                 />
               )}
             />
+            <Route path='/notFound' component={NotFound} />
+            <Redirect to='/notFound' />
           </Switch>
         </div>
       </BrowserRouter>

@@ -1,10 +1,12 @@
 import React from 'react';
 import './login.css';
 
-export default function Login({ handleLogin, closeModal, history }) {
+export default function Login({ handleLogin, closeModal, history, type }) {
   return (
     < div className = "modal" >
-      <form onSubmit={(e) => { handleLogin(e); history.push('/') }}>
+      <form onSubmit={(e) => { handleLogin(e); 
+        type !== "mealDetails" && history.push('/') 
+        }}>
         <div className="header-modal">
           <p className="modal-title">Login</p>
           <i
