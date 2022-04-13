@@ -20,7 +20,7 @@ export default function Navbar({
   return (
     <div className="navbar">
       <Logo />
-      <Search searchByName={searchByName} />
+      {type !== "mealDetails" && <Search searchByName={searchByName} />}
       <div className="rightSide">
         {type !== "mealDetails" && isLoggedIn && <Button word="Add" onClickFunction={openModal} />}
         {isLoggedIn && <Button word="Logout" onClickFunction={handleLogout} />}
