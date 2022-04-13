@@ -28,6 +28,7 @@ export default function Home({
   isFiltered,
   handleChange,
   selectedCategory,
+  getMealDetails,
 }) {
   return (
     <>
@@ -63,6 +64,7 @@ export default function Home({
             login={isLoggedIn}
             addToCart={addToCart}
             selectedCategory={selectedCategory}
+            getMealDetails={getMealDetails}
             page="main"
           />
         </div>
