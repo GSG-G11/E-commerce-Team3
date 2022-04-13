@@ -12,6 +12,7 @@
   --active-background: #111317;
   --title: #e1e6f0;
   --border: #1b1f26;
+  --error: #e74c3c;
 }
 
 * {
@@ -22,6 +23,7 @@
 
 html {
   scroll-behavior: smooth;
+  font-family: 'Montserrat', sans-serif;
 }
 
 body {
@@ -45,6 +47,6 @@ body {
   background-color: var(--main);
 }
 
-#root{
+#root {
   width: 100%;
 }
