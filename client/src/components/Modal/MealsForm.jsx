@@ -23,14 +23,36 @@ export default function Products({ addMeal, isEdit, currentMeal, editMeal }) {
     <>
       <h1>Products</h1>
       <form onSubmit={sumbitFun}>
-        <input type="text" name="name" defaultValue={nameValue}  placeholder='Add a new  meal'/>
-        <input type="number" name="price" defaultValue={priceValue} placeholder='Price' />
-        <input type="text" name="description" defaultValue={descValue} placeholder='Descrip The Meal' />
-        <input type="text" name="img" defaultValue={imgValue} placeholder='Link of Image' />
+        <input
+          type="text"
+          name="name"
+          defaultValue={nameValue}
+          placeholder="Add a new  meal"
+        />
+        <input
+          type="number"
+          name="price"
+          defaultValue={priceValue}
+          placeholder="Price"
+        />
+        <input
+          type="text"
+          name="description"
+          defaultValue={descValue}
+          placeholder="Descrip The Meal"
+        />
+        <input
+          type="text"
+          name="img"
+          defaultValue={imgValue}
+          placeholder="Link of Image"
+        />
         <select name="categories" defaultValue={categoryValue}>
-          <option value="Women">Women</option>
-          <option value="Man">Man</option>
-          <option value="Accessories">Accessories</option>
+          <option value="Soups">Soups</option>
+          <option value="Salads">Salads</option>
+          <option value="Sandwiches">Sandwiches</option>
+          <option value="Pasta">Pasta</option>
+          <option value="Meat">Meat</option>
         </select>
         <button type="submit"> {type} </button>
       </form>

@@ -291,7 +291,7 @@ export default class App extends Component {
     this.setState({ [name]: value });
   };
 
-  // ! ! Meal Function - Meal Details
+  // ! Meal Function - Meal Details
   getMealDetails = (id) => {
     fetch(`/api/v1/meal/${id}`, {
       method: 'GET',
