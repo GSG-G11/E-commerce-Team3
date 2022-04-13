@@ -14,14 +14,15 @@ export default function Navbar({
   openModal,
   searchByName,
   cart,
+  type
 }) {
   defineLordIconElement(loadAnimation);
   return (
     <div className="navbar">
       <Logo />
-      <Search searchByName={searchByName} />
+      {type !== "mealDetails" && <Search searchByName={searchByName} />}
       <div className="rightSide">
-        {isLoggedIn && <Button word="Add" onClickFunction={openModal} />}
+        {type !== "mealDetails" && isLoggedIn && <Button word="Add" onClickFunction={openModal} />}
         {isLoggedIn && <Button word="Logout" onClickFunction={handleLogout} />}
         {!isLoggedIn && <CartIcon cart={cart}/>}
         {!isLoggedIn && (
