@@ -36,10 +36,7 @@ body {
 ::selection {
   background-color: var(--main);
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> 971e55a250552fdf44c2258969407b8dd788e671
 #root{
   width: 100%;
 }
