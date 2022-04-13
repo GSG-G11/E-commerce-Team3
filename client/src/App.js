@@ -8,10 +8,20 @@ import Home from './components/Home/Home';
 import MealDetail from './components/MealDetails/MealDetails';
 
 export default class App extends Component {
+
   state = {
     isLoggedIn: JSON.parse(localStorage.getItem('isLoggedIn')) || false,
     displayLogin: false,
-    meals: [],
+    meals: [
+      {
+        id: 0,
+        name: 'Soup',
+        price: '20',
+        description: 'descriptionalue',
+        img_url: 'https://j.top4top.io/p_22931vc7h1.png',
+        category: 'Soups',
+      },
+    ],
     isEdit: false,
     isOpen: false,
     currentMeal: {},
@@ -21,6 +31,8 @@ export default class App extends Component {
     price: 'none',
     selectedCategory: 'all',
     mealDetails: {},
+    upadateMeal: {},
+    isUpdate: false,
   };
 
   // ! Add to Local Storage Function
@@ -60,7 +72,7 @@ export default class App extends Component {
       this.setState({ currentMeal: currentMeal[0] });
     } else if (value === 'login') {
       this.setState({ displayLogin: true });
-      this.setState({ isOpen: false});
+      this.setState({ isOpen: false });
     } else {
       this.setState({ isEdit: false });
       this.setState({ displayLogin: false });
@@ -77,12 +89,12 @@ export default class App extends Component {
   // ! Meal Function - Add
   addMeal = (e) => {
     e.preventDefault();
-    const { name, price, description, img, categories } = e.target;
+    const { name, price, description, img_url, categories } = e.target;
     const meal = {
       name: name.value,
       price: price.value,
       description: description.value,
-      img: img.value,
+      img_url: img_url.value,
       category: categories.value,
     };
 
@@ -164,38 +176,42 @@ export default class App extends Component {
   // ! Meal Function - Update
   editMeal = (e) => {
     e.preventDefault();
-    const { meals, currentMeal } = this.state;
-    const { name, price, description, img, categories } = e.target;
+    const { currentMeal } = this.state;
+    const { name, price, description, img_url, categories } = e.target;
     const id = currentMeal.id;
     const upadateMeal = {
       id: id,
       name: name.value,
       price: price.value,
       description: description.value,
-      img: img.value,
+      img: img_url.value,
       category: categories.value,
     };
-
-    fetch(`/api/v1/meal/${id}`, {
-      method: 'PUT',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify(upadateMeal),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        const allMeals = meals.map((meal) => {
-          if (meal.id === data.rows[0].id) {
-            return upadateMeal;
-          } else {
-            return meal;
-          }
-        });
-        this.setState({ meals: allMeals });
-      });
+    this.setState({ upadateMeal: upadateMeal, isUpdate: true });
     this.closeModal('update');
   };
+
+  componentDidUpdate() {
+    if (this.state.isUpdate) {
+      fetch(`/api/v1/meal/${this.state.upadateMeal.id}`, {
+        method: 'PUT',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify(this.state.upadateMeal),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          const UpdatedMeals = this.state.meals;
+          const newMeal = data.rows[0];
+          const index = this.state.meals.findIndex(
+            (meal) => meal.id === newMeal.id
+          );
+          UpdatedMeals[index] = newMeal;
+          this.setState({ meals: UpdatedMeals, isUpdate: false });
+        });
+    }
+  }
 
   // ! Meal Function - Add to Cart
   addToCart = (e, id) => {
@@ -404,7 +420,7 @@ export default class App extends Component {
                   handleLogout={this.handleLogout}
                   openModal={this.openModal}
                   cart={cart.length}
-                  displayLogin={ displayLogin}
+                  displayLogin={displayLogin}
                   handleLogin={this.handleLogin}
                   closeModal={this.closeModal}
                 />

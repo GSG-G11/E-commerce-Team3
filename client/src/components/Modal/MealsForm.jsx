@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import '../Login/login.css';
 
 export default function Meals({
@@ -65,13 +64,17 @@ export default function Meals({
           <div className="field">
             <input
               type="text"
-              name="img"
+              name="img_url"
               defaultValue={imgValue}
               placeholder="Link of Image"
             />
           </div>
           <div className="field">
-            <select name="categories" defaultValue={categoryValue} className='select-category'>
+            <select
+              name="categories"
+              defaultValue={categoryValue}
+              className="select-category"
+            >
               <option value="Soups">Soups</option>
               <option value="Salads">Salads</option>
               <option value="Sandwiches">Sandwiches</option>
@@ -79,11 +82,9 @@ export default function Meals({
               <option value="Meat">Meat</option>
             </select>
           </div>
-          <Link to ='/'>
           <button type="submit" className="login-btn">
             {type}
           </button>
-          </Link>
         </form>
       </div>
     </>

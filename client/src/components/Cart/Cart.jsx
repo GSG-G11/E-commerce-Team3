@@ -20,35 +20,39 @@ export default function Cart({
   filteredMeals,
   displayLogin,
   closeModal,
-  handleLogin
+  handleLogin,
+  history,
 }) {
-  console.log(openModal);
   return (
-   <>
-    {displayLogin && (
-      <Login handleLogin={handleLogin} closeModal={closeModal} />
-    )}
-    <div className="main">
-      <div className="container">
-        <Navbar
-          searchByName={searchByName}
-          isLoggedIn={isLoggedIn}
-          handleLogout={handleLogout}
-          openModal={openModal}
-          cart={cart}
+    <>
+      {displayLogin && (
+        <Login
+          handleLogin={handleLogin}
+          closeModal={closeModal}
+          history={history}
         />
-        <Filter handleChange={handleChange} />
-        <Cards
-          meals={meals}
-          filteredMeals={filteredMeals}
-          page={page}
-          isFiltered={isFiltered}
-          deleteFromCart={deleteFromCart}
-          selectedCategory={selectedCategory}
-          price={price}
-        />
+      )}
+      <div className="main">
+        <div className="container">
+          <Navbar
+            searchByName={searchByName}
+            isLoggedIn={isLoggedIn}
+            handleLogout={handleLogout}
+            openModal={openModal}
+            cart={cart}
+          />
+          <Filter handleChange={handleChange} />
+          <Cards
+            meals={meals}
+            filteredMeals={filteredMeals}
+            page={page}
+            isFiltered={isFiltered}
+            deleteFromCart={deleteFromCart}
+            selectedCategory={selectedCategory}
+            price={price}
+          />
+        </div>
       </div>
-    </div>
-   </>
+    </>
   );
 }
