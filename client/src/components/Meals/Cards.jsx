@@ -13,6 +13,7 @@ export default function Cards({
   getMealDetails,
   deleteFromCart,
   page,
+  price,
 }) {
   if (isFiltered) {
     meals = filteredMeals;
@@ -20,6 +21,11 @@ export default function Cards({
 
   if (selectedCategory !== 'all') {
     const arr = meals.filter((meal) => meal.category === selectedCategory);
+    meals = arr;
+  }
+
+  if (price !== 'none') {
+    const arr = meals.filter((meal) => meal.price < price);
     meals = arr;
   }
 
