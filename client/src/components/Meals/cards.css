@@ -66,18 +66,31 @@
   justify-content: center;
 }
 
-.meal-btn:hover{
+.meal-btn:hover,
+.control-btn:hover {
   background-color: #cee6b0;
 }
 
-.btn-edit {
-  width: 72px;
-  margin: 5px;
-}
-
-.more-btn{
+.more-btn {
   background-color: none;
   border: none;
   color: var(--main);
   font-weight: 400;
+  cursor: pointer;
+}
+
+.buttons {
+  display: flex;
+  gap: 2px;
+}
+
+.control-btn {
+  border: 1px solid var(--background);
+  border-radius: 50px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
 }

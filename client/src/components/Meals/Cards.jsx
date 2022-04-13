@@ -11,9 +11,9 @@ export default function Cards({
   login,
   addToCart,
   getMealDetails,
+  deleteFromCart,
   page,
 }) {
-
   if (isFiltered) {
     meals = filteredMeals;
   }
@@ -22,7 +22,7 @@ export default function Cards({
     const arr = meals.filter((meal) => meal.category === selectedCategory);
     meals = arr;
   }
-  
+
   return (
     <div className="cards">
       {meals.map((meal) => {
@@ -34,12 +34,12 @@ export default function Cards({
             openModal={openModal}
             login={login}
             addToCart={addToCart}
-            page="main"
+            page={page}
             getMealDetails={getMealDetails}
+            deleteFromCart={deleteFromCart}
           />
         );
       })}
     </div>
-  
   );
 }

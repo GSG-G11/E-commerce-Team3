@@ -29,6 +29,7 @@ export default function Home({
   handleChange,
   selectedCategory,
   getMealDetails,
+  price,
 }) {
   return (
     <>
@@ -45,7 +46,7 @@ export default function Home({
         />
       )}
       <div className="main">
-        <div className="conatiner">
+        <div className="container">
           <Navbar
             isLoggedIn={isLoggedIn}
             handleLogout={handleLogout}
@@ -66,6 +67,7 @@ export default function Home({
             selectedCategory={selectedCategory}
             getMealDetails={getMealDetails}
             page="main"
+            price={price}
           />
         </div>
       </div>

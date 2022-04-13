@@ -9,7 +9,7 @@ import MealDetail from './components/MealDetails/MealDetails';
 
 export default class App extends Component {
   state = {
-    isLoggedIn: JSON.parse(localStorage.isLoggedIn) || false,
+    isLoggedIn: JSON.parse(localStorage.getItem('isLoggedIn')) || false,
     displayLogin: false,
     meals: [],
     isEdit: false,
@@ -232,7 +232,6 @@ export default class App extends Component {
 
   // ! Meal Function - Remove from Cart
   deleteFromCart = (id) => {
-    const { cart } = this.state;
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn-alert btn-success',

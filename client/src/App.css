@@ -33,6 +33,15 @@ body {
   height: 100vh;
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--main);
+  border-radius: 50px;
+}
+
 ::selection {
   background-color: var(--main);
 }
