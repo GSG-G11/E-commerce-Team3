@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../Login/login.css';
 
 export default function Meals({
@@ -78,9 +79,11 @@ export default function Meals({
               <option value="Meat">Meat</option>
             </select>
           </div>
+          <Link to ='/'>
           <button type="submit" className="login-btn">
             {type}
           </button>
+          </Link>
         </form>
       </div>
     </>

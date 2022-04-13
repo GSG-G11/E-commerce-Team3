@@ -1,14 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;500;700&display=swap');
 .mealDetails {
   width: 90%;
   margin: 1.9rem auto;
   display: flex;
   justify-content: space-evenly;
+  align-items: center;
   font-family: 'Montserrat', sans-serif;
   align-items: start;
 }
-
+.mealDetails .meal-img{
+width: 40%;
+}
+.mealDetails img{
+  max-width: 100%;
+  margin-top: 20px;
+}
 .DataSide {
+  width: 40%;
   margin: 25px 0;
+  font-family: 'Montserrat';
 }
 
 .meal-name {
@@ -23,8 +33,11 @@
   color: var(--black);
   padding: 3px;
   border-radius: 50px;
-  font-size: 23px;
-  margin: 20px 0 0;
+  font-size: 1rem;
+  line-height: 1.8;
+  margin: auto;
+  opacity: 0.5;
+
 }
 
 .Add {
@@ -37,6 +50,8 @@
   padding: 10px;
   font-weight: 900;
   margin: 0.2rem;
+  margin: 1.2rem;
+  transition: 0.5s all ease-in-out;
 }
 
 .Add:hover {

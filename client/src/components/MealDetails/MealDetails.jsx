@@ -13,7 +13,9 @@ export default function MealDetails({
 }) {
   const { img_url, name, price, category, description } = mealDetails;
   return (
-    <>
+    
+    <div className='main'>
+      <div className='container'>
       <Navbar
         isLoggedIn={isLoggedIn}
         handleLogout={handleLogout}
@@ -23,7 +25,10 @@ export default function MealDetails({
         openModal={openModal}
       />
       <div className="mealDetails">
-        <img src={img_url} alt="meal img" className="meal-img" />
+        <div className='meal-img'>
+        <img src={img_url} alt="meal img" />
+        </div>
+     
         <div className="DataSide">
           <h3 className="meal-name">{name}</h3>
           <p className="meal-price">{price}$</p>
@@ -32,6 +37,10 @@ export default function MealDetails({
           <button className="Add">Add to cart</button>
         </div>
       </div>
-    </>
+     </div>
+
+    </div>
+  
+    
   );
 }

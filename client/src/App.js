@@ -60,7 +60,7 @@ export default class App extends Component {
       this.setState({ currentMeal: currentMeal[0] });
     } else if (value === 'login') {
       this.setState({ displayLogin: true });
-      this.setState({ isOpen: false });
+      this.setState({ isOpen: false});
     } else {
       this.setState({ isEdit: false });
       this.setState({ displayLogin: false });
@@ -404,6 +404,9 @@ export default class App extends Component {
                   handleLogout={this.handleLogout}
                   openModal={this.openModal}
                   cart={cart.length}
+                  displayLogin={ displayLogin}
+                  handleLogin={this.handleLogin}
+                  closeModal={this.closeModal}
                 />
               )}
             />

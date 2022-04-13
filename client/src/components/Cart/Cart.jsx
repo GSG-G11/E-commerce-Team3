@@ -2,6 +2,8 @@ import React from 'react';
 import Navbar from '../Navbar/Navbar';
 import Filter from '../Filter/filter';
 import Cards from '../Meals/Cards';
+import Login from '../Login/Login';
+
 export default function Cart({
   meals,
   page = 'cart',
@@ -16,8 +18,16 @@ export default function Cart({
   searchByName,
   cart,
   filteredMeals,
+  displayLogin,
+  closeModal,
+  handleLogin
 }) {
+  console.log(openModal);
   return (
+   <>
+    {displayLogin && (
+      <Login handleLogin={handleLogin} closeModal={closeModal} />
+    )}
     <div className="main">
       <div className="container">
         <Navbar
@@ -39,5 +49,6 @@ export default function Cart({
         />
       </div>
     </div>
+   </>
   );
 }
