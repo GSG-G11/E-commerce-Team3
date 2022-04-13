@@ -9,9 +9,9 @@ const { servererror, clientError } = require('../controllers');
 router.use(apiRouters);
 
 if (process.env.NODE_ENV === 'production') {
-  router.use(express.static(join(__dirname, '..', 'client', 'build')));
+  router.use(express.static(join(__dirname, '..', '..', 'client', 'build')));
   router.get('*', (req, res) => {
-    res.sendFile(join(__dirname, '..', 'client', 'build', 'index.html'));
+    res.sendFile(join(__dirname, '..', '..', 'client', 'build', 'index.html'));
   });
 }
 router.use(clientError);
