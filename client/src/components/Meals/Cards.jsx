@@ -10,6 +10,7 @@ export default function Cards({
   openModal,
   login,
   addToCart,
+  getMealDetails,
   page,
 }) {
   if (isFiltered) {
@@ -21,18 +22,18 @@ export default function Cards({
     meals = arr;
   }
   return (
-
-    <div className='cards'>
+    <div className="cards">
       {meals.map((meal) => {
-      
         return (
-          <Card  key={meal.id}
+          <Card
+            key={meal.id}
             meal={meal}
             deleteMeal={deleteMeal}
             openModal={openModal}
             login={login}
             addToCart={addToCart}
-            page='main'
+            page="main"
+            getMealDetails={getMealDetails}
           />
         );
       })}
