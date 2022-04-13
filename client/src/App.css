@@ -36,3 +36,6 @@ body {
 ::selection {
   background-color: var(--main);
 }
+#root{
+  width: 100%;
+}

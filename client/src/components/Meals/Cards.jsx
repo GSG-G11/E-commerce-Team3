@@ -21,7 +21,7 @@ export default function Cards({
     meals = arr;
   }
   return (
-
+    
     <div className='cards'>
       {meals.map((meal) => {
       
@@ -37,5 +37,6 @@ export default function Cards({
         );
       })}
     </div>
+  
   );
 }

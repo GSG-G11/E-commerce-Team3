@@ -4,6 +4,7 @@ import './mealDetails.css'
 
 export default function MealDetails({mealDetails,  isLoggedIn, handleLogout, handleLogin, displayLogin, isOpen, openModal }) {
   const {  img_url, name, price, category, description }= mealDetails;
+  console.log(mealDetails , "detalis");
   return (
     <>
     <Navbar 

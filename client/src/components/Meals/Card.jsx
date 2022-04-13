@@ -18,8 +18,6 @@ export default function Card({
       <img
         src={img_url}
         alt="product img"
-        width="150px"
-        height="150px"
         className="meal-img"
       />
       <h3 className="meal-title">{name}</h3>

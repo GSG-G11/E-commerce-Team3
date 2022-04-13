@@ -15,30 +15,31 @@ export default function Cart({
   isFiltered,
   searchByName,
   cart,
-  filteredMeals
-})
-{
-
+  filteredMeals,
+}) {
   return (
-    <>
-      <Navbar
-        searchByName={searchByName}
-        isLoggedIn={isLoggedIn}
-        handleLogout={handleLogout}
-        openModal={openModal}
-        cart={cart}
-      />
+    
+       <div className='main'>
+         <div className='contianer'>
+         <Navbar
+          searchByName={searchByName}
+          isLoggedIn={isLoggedIn}
+          handleLogout={handleLogout}
+          openModal={openModal}
+          cart={cart}
+        />
         <Filter handleChange={handleChange} />
-      
-      <Cards
-        meals={meals}
-        filteredMeals={filteredMeals}
-        page={page}
-        isFiltered={isFiltered}
-        deleteFromCart={deleteFromCart}
-        selectedCategory={selectedCategory}
-        price={price}
-      />
-    </>
+
+        <Cards
+          meals={meals}
+          filteredMeals={filteredMeals}
+          page={page}
+          isFiltered={isFiltered}
+          deleteFromCart={deleteFromCart}
+          selectedCategory={selectedCategory}
+          price={price}
+        />
+         </div>
+       </div>
   );
 }
