@@ -30,6 +30,7 @@ export default function MealDetails({
     <div className='main'>
       <div className='container'>
       <Navbar
+       type="mealDetails"
         isLoggedIn={isLoggedIn}
         handleLogout={handleLogout}
         handleLogin={handleLogin}
