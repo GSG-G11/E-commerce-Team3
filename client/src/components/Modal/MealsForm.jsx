@@ -1,6 +1,13 @@
 import React from 'react';
+import '../Login/login.css';
 
-export default function Products({ addMeal, isEdit, currentMeal, editMeal }) {
+export default function Meals({
+  addMeal,
+  isEdit,
+  currentMeal,
+  editMeal,
+  closeModal,
+}) {
   let type = 'Add';
   let sumbitFun = addMeal;
   let nameValue = '';
@@ -21,41 +28,61 @@ export default function Products({ addMeal, isEdit, currentMeal, editMeal }) {
 
   return (
     <>
-      <h1>Products</h1>
-      <form onSubmit={sumbitFun}>
-        <input
-          type="text"
-          name="name"
-          defaultValue={nameValue}
-          placeholder="Add a new  meal"
-        />
-        <input
-          type="number"
-          name="price"
-          defaultValue={priceValue}
-          placeholder="Price"
-        />
-        <input
-          type="text"
-          name="description"
-          defaultValue={descValue}
-          placeholder="Descrip The Meal"
-        />
-        <input
-          type="text"
-          name="img"
-          defaultValue={imgValue}
-          placeholder="Link of Image"
-        />
-        <select name="categories" defaultValue={categoryValue}>
-          <option value="Soups">Soups</option>
-          <option value="Salads">Salads</option>
-          <option value="Sandwiches">Sandwiches</option>
-          <option value="Pasta">Pasta</option>
-          <option value="Meat">Meat</option>
-        </select>
-        <button type="submit"> {type} </button>
-      </form>
+      <div className="modal">
+        <form onSubmit={sumbitFun}>
+          <div className="header-modal">
+            <p className="modal-title">Add product</p>
+            <i
+              onClick={() => closeModal('login')}
+              className="fa-solid fa-xmark"
+            ></i>
+          </div>
+          <div className="field">
+            <input
+              type="text"
+              name="name"
+              defaultValue={nameValue}
+              placeholder="Add a new  meal"
+            />
+          </div>
+          <div className="field">
+            <input
+              type="number"
+              name="price"
+              defaultValue={priceValue}
+              placeholder="Price"
+            />
+          </div>
+          <div className="field">
+            <input
+              type="text"
+              name="description"
+              defaultValue={descValue}
+              placeholder="Descrip The Meal"
+            />
+          </div>
+          <div className="field">
+            <input
+              type="text"
+              name="img"
+              defaultValue={imgValue}
+              placeholder="Link of Image"
+            />
+          </div>
+          <div className="field">
+            <select name="categories" defaultValue={categoryValue} className='select-category'>
+              <option value="Soups">Soups</option>
+              <option value="Salads">Salads</option>
+              <option value="Sandwiches">Sandwiches</option>
+              <option value="Pasta">Pasta</option>
+              <option value="Meat">Meat</option>
+            </select>
+          </div>
+          <button type="submit" className="login-btn">
+            {type}
+          </button>
+        </form>
+      </div>
     </>
   );
 }

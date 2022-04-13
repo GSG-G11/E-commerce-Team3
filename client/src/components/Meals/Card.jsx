@@ -30,32 +30,21 @@ export default function Card({
         </button>
       )}
       {page !== 'main' && !login && (
-        <div className="price-cart">
-          <p className="meal-price">
-            <span> $ </span> {price}
-          </p>
-          <button
-            onClick={() => deleteFromCart(id)}
-            className="meal-btn btn-edit"
-          >
-            DELETE
-          </button>
-          <button
-            onClick={() => openModal('update', id)}
-            className="meal-btn btn-edit"
-          >
-            EDIT
-          </button>
-        </div>
+        <button
+          onClick={() => deleteFromCart(id)}
+          className="meal-btn btn-edit"
+        >
+          DELETE
+        </button>
       )}
-      {/* {page === 'main' && login && (
+      {page === 'main' && login && (
         <button
           onClick={() => openModal('update', id)}
           className="meal-btn btn-edit"
         >
           EDIT
         </button>
-      )} */}
+      )}
       {page === 'main' && !login && (
         <div className="price-cart">
           <p className="meal-price">

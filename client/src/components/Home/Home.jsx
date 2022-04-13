@@ -1,6 +1,6 @@
 import React from 'react';
 import Login from '../Login/Login';
-import Products from '../Modal/MealsForm';
+import Meals from '../Modal/MealsForm';
 import Navbar from '../Navbar/Navbar';
 import Filter from '../Filter/filter';
 import Header from '../Header/Header';
@@ -31,19 +31,20 @@ export default function Home({
 }) {
   return (
     <>
-        {displayLogin && (
-          <Login handleLogin={handleLogin} closeModal={closeModal} />
-        )}
+      {displayLogin && (
+        <Login handleLogin={handleLogin} closeModal={closeModal} />
+      )}
+      {isOpen && (
+        <Meals
+          addMeal={addMeal}
+          isEdit={isEdit}
+          currentMeal={currentMeal}
+          editMeal={editMeal}
+          closeModal={closeModal}
+        />
+      )}
       <div className="main">
         <div className="conatiner">
-          {isOpen && (
-            <Products
-              addMeal={addMeal}
-              isEdit={isEdit}
-              currentMeal={currentMeal}
-              editMeal={editMeal}
-            />
-          )}
           <Navbar
             isLoggedIn={isLoggedIn}
             handleLogout={handleLogout}
