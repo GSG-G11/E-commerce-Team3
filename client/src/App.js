@@ -9,7 +9,7 @@ import MealDetail from './components/MealDetails/MealDetails';
 
 export default class App extends Component {
   state = {
-    isLoggedIn: localStorage.isLoggedIn === true ? true : false,
+    isLoggedIn: JSON.parse(localStorage.isLoggedIn) || false,
     displayLogin: false,
     meals: [],
     isEdit: false,

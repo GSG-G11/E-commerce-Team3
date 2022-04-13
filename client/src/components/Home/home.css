@@ -15,8 +15,7 @@ body {
   border: 3px solid #ffffff;
   border-radius: 70px;
   opacity: 1;
-  backdrop-filter: blur(26px);
-  -webkit-backdrop-filter: blur(26px);
+  backdrop-filter: blur(10px);
   margin: 50px;
   height: 100%;
 }
