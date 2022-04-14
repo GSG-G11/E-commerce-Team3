@@ -6,13 +6,13 @@
   --border: #e6e6e6;
   --black: #000000;
   --background: #dae0e6;
-  --text: #000000;
   --icon: #595959;
   --placeholder: #9ea0a5;
   --sub-icon: #999da5;
   --active-background: #111317;
   --title: #e1e6f0;
   --border: #1b1f26;
+  --error: #e74c3c;
 }
 
 * {
@@ -23,6 +23,7 @@
 
 html {
   scroll-behavior: smooth;
+  font-family: 'Montserrat', sans-serif;
 }
 
 body {
@@ -46,6 +47,6 @@ body {
   background-color: var(--main);
 }
 
-#root{
+#root {
   width: 100%;
 }

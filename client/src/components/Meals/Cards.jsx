@@ -32,7 +32,7 @@ export default function Cards({
   }
 
   return (
-    <div className="cards">
+    <div className="cards" id='cards'>
       {meals.length ? (meals.map((meal) => {
         return (
           <Card

@@ -1,5 +1,5 @@
 import React from 'react'
-import image from './img/mainFood.jpg'
+import image from './img/mainFood.png';
 
 export default function Image() {
   return (

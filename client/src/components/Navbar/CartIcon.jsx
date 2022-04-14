@@ -9,7 +9,7 @@ export default function CartIcon({ cart }) {
         src="https://cdn.lordicon.com/slkvcfos.json"
         trigger="hover"
         colors="primary:#595959,secondary:#84b74d"
-        style={{ margin: '0 10px' }}
+        style={{ margin: '0 6px' }}
         ></lord-icon>
     </Link>
   );
