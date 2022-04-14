@@ -1,7 +1,6 @@
 # :shallow_pan_of_food: Meals
  
- <img src='https://www.up-00.com/i/00227/6f5zibj6gt8f.png
-'>
+ ![](https://i.imgur.com/ToiS7h0.png)
 
 - [Description](#Description)
 - [Links](#Links)
