@@ -1,4 +1,5 @@
 import React from 'react'
+import './NotFound.css'
 
 export default function NoDataFound() {
   return (
@@ -8,9 +9,9 @@ export default function NoDataFound() {
             trigger="loop"
             colors="primary:#595959,secondary:#84b74d"
             style={{
-              margin: '0 10px',
-              width: '400px',
-              height: '400px',
+              margin: '0 auto',
+              width: '350px',
+              height: '350px',
             }}
           ></lord-icon>
           <div className="text-data">
